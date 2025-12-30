@@ -1,6 +1,7 @@
 # Fichiers temporaires Quarto
 .quarto/
 _freeze/
+_site/
 
 # Fichiers R
 .Rhistory
@@ -15,3 +16,6 @@ Thumbs.db
 
 # Fichiers de cache
 *.cache
+
+/.quarto/
+**/*.quarto_ipynb
