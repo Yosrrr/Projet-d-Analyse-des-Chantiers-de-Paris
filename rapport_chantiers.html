@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="[Votre Nom]">
 
 <title>Analyse des Chantiers à Paris</title>
 <style>
@@ -233,19 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Auteur·rice</div>
-    <div class="quarto-title-meta-contents">
-             <p>[Votre Nom] </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Date de publication</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">30 décembre 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -1758,570 +1745,568 @@ Figure&nbsp;6: Relation entre surface et durée des chantiers
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Analyse des Chantiers à Paris"</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="an">subtitle:</span><span class="co"> "Projet de Data Science avec R"</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "[Votre Nom]"</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> today</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: cosmo</span></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Sommaire"</span></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="co">    code-summary: "Afficher le code"</span></span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> fr</span></span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="co">    theme: cosmo</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-title: "Sommaire"</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="co">    code-summary: "Afficher le code"</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="an">lang:</span><span class="co"> fr</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
 <span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="fu"># Introduction</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Contexte du projet</span></span>
 <span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Contexte du projet</span></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>Ce projet analyse les données des **chantiers de la Ville de Paris** disponibles sur la plateforme OpenData Paris. L'objectif est de comprendre la répartition géographique et temporelle des travaux dans la capitale française.</span>
 <span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>Ce projet analyse les données des **chantiers de la Ville de Paris** disponibles sur la plateforme OpenData Paris. L'objectif est de comprendre la répartition géographique et temporelle des travaux dans la capitale française.</span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questions de recherche</span></span>
 <span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Questions de recherche</span></span>
-<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Quels arrondissements concentrent le plus de chantiers ?</span>
-<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Quelle est la durée moyenne des travaux ?</span>
-<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Quels types de chantiers sont les plus fréquents ?</span>
-<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Existe-t-il une corrélation entre la surface et la durée des chantiers ?</span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Quels arrondissements concentrent le plus de chantiers ?</span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Quelle est la durée moyenne des travaux ?</span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Quels types de chantiers sont les plus fréquents ?</span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Existe-t-il une corrélation entre la surface et la durée des chantiers ?</span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Source des données</span></span>
 <span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Source des données</span></span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>Les données proviennent de l'API OpenData Paris :</span>
 <span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>Les données proviennent de l'API OpenData Paris :</span>
-<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**URL** : <span class="ot">&lt;https://opendata.paris.fr/explore/dataset/chantiers-a-paris/&gt;</span></span>
-<span id="cb50-34"><a href="#cb50-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Format** : JSON</span>
-<span id="cb50-35"><a href="#cb50-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mise à jour** : Temps réel</span>
+<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**URL** : <span class="ot">&lt;https://opendata.paris.fr/explore/dataset/chantiers-a-paris/&gt;</span></span>
+<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Format** : JSON</span>
+<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mise à jour** : Temps réel</span>
+<span id="cb50-34"><a href="#cb50-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-35"><a href="#cb50-35" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb50-36"><a href="#cb50-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-37"><a href="#cb50-37" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb50-37"><a href="#cb50-37" aria-hidden="true" tabindex="-1"></a><span class="fu"># Méthodologie</span></span>
 <span id="cb50-38"><a href="#cb50-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-39"><a href="#cb50-39" aria-hidden="true" tabindex="-1"></a><span class="fu"># Méthodologie</span></span>
+<span id="cb50-39"><a href="#cb50-39" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chargement des packages</span></span>
 <span id="cb50-40"><a href="#cb50-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-41"><a href="#cb50-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chargement des packages</span></span>
-<span id="cb50-42"><a href="#cb50-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-45"><a href="#cb50-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-46"><a href="#cb50-46" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
-<span id="cb50-47"><a href="#cb50-47" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb50-48"><a href="#cb50-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb50-49"><a href="#cb50-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-50"><a href="#cb50-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Chargement des packages nécessaires</span></span>
-<span id="cb50-51"><a href="#cb50-51" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)    <span class="co"># Manipulation de données + graphiques</span></span>
-<span id="cb50-52"><a href="#cb50-52" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)    <span class="co"># Gestion des dates</span></span>
-<span id="cb50-53"><a href="#cb50-53" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)      <span class="co"># Nettoyage des données</span></span>
-<span id="cb50-54"><a href="#cb50-54" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)       <span class="co"># Formatage des nombres</span></span>
-<span id="cb50-55"><a href="#cb50-55" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)      <span class="co"># Cartes interactives</span></span>
-<span id="cb50-56"><a href="#cb50-56" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)        <span class="co"># Tableaux</span></span>
-<span id="cb50-57"><a href="#cb50-57" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)   <span class="co"># Amélioration des tableaux</span></span>
-<span id="cb50-58"><a href="#cb50-58" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr)         <span class="co"># Requêtes HTTP</span></span>
-<span id="cb50-59"><a href="#cb50-59" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)     <span class="co"># Lecture JSON</span></span>
-<span id="cb50-60"><a href="#cb50-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-43"><a href="#cb50-43" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-44"><a href="#cb50-44" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb50-45"><a href="#cb50-45" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb50-46"><a href="#cb50-46" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb50-47"><a href="#cb50-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-48"><a href="#cb50-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Chargement des packages nécessaires</span></span>
+<span id="cb50-49"><a href="#cb50-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)    <span class="co"># Manipulation de données + graphiques</span></span>
+<span id="cb50-50"><a href="#cb50-50" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)    <span class="co"># Gestion des dates</span></span>
+<span id="cb50-51"><a href="#cb50-51" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)      <span class="co"># Nettoyage des données</span></span>
+<span id="cb50-52"><a href="#cb50-52" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)       <span class="co"># Formatage des nombres</span></span>
+<span id="cb50-53"><a href="#cb50-53" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)      <span class="co"># Cartes interactives</span></span>
+<span id="cb50-54"><a href="#cb50-54" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)        <span class="co"># Tableaux</span></span>
+<span id="cb50-55"><a href="#cb50-55" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)   <span class="co"># Amélioration des tableaux</span></span>
+<span id="cb50-56"><a href="#cb50-56" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr)         <span class="co"># Requêtes HTTP</span></span>
+<span id="cb50-57"><a href="#cb50-57" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)     <span class="co"># Lecture JSON</span></span>
+<span id="cb50-58"><a href="#cb50-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-59"><a href="#cb50-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-60"><a href="#cb50-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Téléchargement des données</span></span>
 <span id="cb50-61"><a href="#cb50-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-62"><a href="#cb50-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Téléchargement des données</span></span>
+<span id="cb50-62"><a href="#cb50-62" aria-hidden="true" tabindex="-1"></a>On récupère les données directement depuis l'API OpenData Paris :</span>
 <span id="cb50-63"><a href="#cb50-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-64"><a href="#cb50-64" aria-hidden="true" tabindex="-1"></a>On récupère les données directement depuis l'API OpenData Paris :</span>
-<span id="cb50-65"><a href="#cb50-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-68"><a href="#cb50-68" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-69"><a href="#cb50-69" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: telecharger-donnees</span></span>
-<span id="cb50-70"><a href="#cb50-70" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: true</span></span>
-<span id="cb50-71"><a href="#cb50-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-72"><a href="#cb50-72" aria-hidden="true" tabindex="-1"></a><span class="co"># URL de l'API</span></span>
-<span id="cb50-73"><a href="#cb50-73" aria-hidden="true" tabindex="-1"></a>url_api <span class="ot">&lt;-</span> <span class="st">"https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/chantiers-a-paris/records"</span></span>
-<span id="cb50-74"><a href="#cb50-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-75"><a href="#cb50-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Fonction pour télécharger toutes les données</span></span>
-<span id="cb50-76"><a href="#cb50-76" aria-hidden="true" tabindex="-1"></a>telecharger_donnees <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">limit =</span> <span class="dv">100</span>) {</span>
-<span id="cb50-77"><a href="#cb50-77" aria-hidden="true" tabindex="-1"></a>  tous_resultats <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb50-78"><a href="#cb50-78" aria-hidden="true" tabindex="-1"></a>  offset <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb50-79"><a href="#cb50-79" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb50-80"><a href="#cb50-80" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb50-81"><a href="#cb50-81" aria-hidden="true" tabindex="-1"></a>  <span class="cf">repeat</span> {</span>
-<span id="cb50-82"><a href="#cb50-82" aria-hidden="true" tabindex="-1"></a>    url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(url_api, <span class="st">"?limit="</span>, limit, <span class="st">"&amp;offset="</span>, offset)</span>
-<span id="cb50-83"><a href="#cb50-83" aria-hidden="true" tabindex="-1"></a>    reponse <span class="ot">&lt;-</span> <span class="fu">GET</span>(url, <span class="fu">timeout</span>(<span class="dv">60</span>))</span>
+<span id="cb50-66"><a href="#cb50-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-67"><a href="#cb50-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: telecharger-donnees</span></span>
+<span id="cb50-68"><a href="#cb50-68" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: true</span></span>
+<span id="cb50-69"><a href="#cb50-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-70"><a href="#cb50-70" aria-hidden="true" tabindex="-1"></a><span class="co"># URL de l'API</span></span>
+<span id="cb50-71"><a href="#cb50-71" aria-hidden="true" tabindex="-1"></a>url_api <span class="ot">&lt;-</span> <span class="st">"https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/chantiers-a-paris/records"</span></span>
+<span id="cb50-72"><a href="#cb50-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-73"><a href="#cb50-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Fonction pour télécharger toutes les données</span></span>
+<span id="cb50-74"><a href="#cb50-74" aria-hidden="true" tabindex="-1"></a>telecharger_donnees <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">limit =</span> <span class="dv">100</span>) {</span>
+<span id="cb50-75"><a href="#cb50-75" aria-hidden="true" tabindex="-1"></a>  tous_resultats <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb50-76"><a href="#cb50-76" aria-hidden="true" tabindex="-1"></a>  offset <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb50-77"><a href="#cb50-77" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb50-78"><a href="#cb50-78" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb50-79"><a href="#cb50-79" aria-hidden="true" tabindex="-1"></a>  <span class="cf">repeat</span> {</span>
+<span id="cb50-80"><a href="#cb50-80" aria-hidden="true" tabindex="-1"></a>    url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(url_api, <span class="st">"?limit="</span>, limit, <span class="st">"&amp;offset="</span>, offset)</span>
+<span id="cb50-81"><a href="#cb50-81" aria-hidden="true" tabindex="-1"></a>    reponse <span class="ot">&lt;-</span> <span class="fu">GET</span>(url, <span class="fu">timeout</span>(<span class="dv">60</span>))</span>
+<span id="cb50-82"><a href="#cb50-82" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb50-83"><a href="#cb50-83" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">status_code</span>(reponse) <span class="sc">!=</span> <span class="dv">200</span>) <span class="cf">break</span></span>
 <span id="cb50-84"><a href="#cb50-84" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb50-85"><a href="#cb50-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">status_code</span>(reponse) <span class="sc">!=</span> <span class="dv">200</span>) <span class="cf">break</span></span>
-<span id="cb50-86"><a href="#cb50-86" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb50-87"><a href="#cb50-87" aria-hidden="true" tabindex="-1"></a>    contenu <span class="ot">&lt;-</span> <span class="fu">content</span>(reponse, <span class="st">"text"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
-<span id="cb50-88"><a href="#cb50-88" aria-hidden="true" tabindex="-1"></a>    donnees <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(contenu, <span class="at">flatten =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-89"><a href="#cb50-89" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb50-90"><a href="#cb50-90" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is.null</span>(total)) total <span class="ot">&lt;-</span> donnees<span class="sc">$</span>total_count</span>
-<span id="cb50-91"><a href="#cb50-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(donnees<span class="sc">$</span>results) <span class="sc">==</span> <span class="dv">0</span>) <span class="cf">break</span></span>
-<span id="cb50-92"><a href="#cb50-92" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb50-93"><a href="#cb50-93" aria-hidden="true" tabindex="-1"></a>    tous_resultats[[<span class="fu">length</span>(tous_resultats) <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> donnees<span class="sc">$</span>results</span>
-<span id="cb50-94"><a href="#cb50-94" aria-hidden="true" tabindex="-1"></a>    offset <span class="ot">&lt;-</span> offset <span class="sc">+</span> limit</span>
-<span id="cb50-95"><a href="#cb50-95" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(offset <span class="sc">&gt;=</span> total) <span class="cf">break</span></span>
-<span id="cb50-96"><a href="#cb50-96" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb50-97"><a href="#cb50-97" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb50-98"><a href="#cb50-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(tous_resultats)</span>
-<span id="cb50-99"><a href="#cb50-99" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-100"><a href="#cb50-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-101"><a href="#cb50-101" aria-hidden="true" tabindex="-1"></a><span class="co"># Téléchargement</span></span>
-<span id="cb50-102"><a href="#cb50-102" aria-hidden="true" tabindex="-1"></a>donnees_brutes <span class="ot">&lt;-</span> <span class="fu">telecharger_donnees</span>()</span>
-<span id="cb50-103"><a href="#cb50-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-104"><a href="#cb50-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-107"><a href="#cb50-107" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-108"><a href="#cb50-108" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: info-donnees</span></span>
-<span id="cb50-109"><a href="#cb50-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-110"><a href="#cb50-110" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Nombre de chantiers téléchargés:"</span>, <span class="fu">nrow</span>(donnees_brutes), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-111"><a href="#cb50-111" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Nombre de variables:"</span>, <span class="fu">ncol</span>(donnees_brutes))</span>
-<span id="cb50-112"><a href="#cb50-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-85"><a href="#cb50-85" aria-hidden="true" tabindex="-1"></a>    contenu <span class="ot">&lt;-</span> <span class="fu">content</span>(reponse, <span class="st">"text"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb50-86"><a href="#cb50-86" aria-hidden="true" tabindex="-1"></a>    donnees <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(contenu, <span class="at">flatten =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb50-87"><a href="#cb50-87" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb50-88"><a href="#cb50-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">is.null</span>(total)) total <span class="ot">&lt;-</span> donnees<span class="sc">$</span>total_count</span>
+<span id="cb50-89"><a href="#cb50-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(donnees<span class="sc">$</span>results) <span class="sc">==</span> <span class="dv">0</span>) <span class="cf">break</span></span>
+<span id="cb50-90"><a href="#cb50-90" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb50-91"><a href="#cb50-91" aria-hidden="true" tabindex="-1"></a>    tous_resultats[[<span class="fu">length</span>(tous_resultats) <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> donnees<span class="sc">$</span>results</span>
+<span id="cb50-92"><a href="#cb50-92" aria-hidden="true" tabindex="-1"></a>    offset <span class="ot">&lt;-</span> offset <span class="sc">+</span> limit</span>
+<span id="cb50-93"><a href="#cb50-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(offset <span class="sc">&gt;=</span> total) <span class="cf">break</span></span>
+<span id="cb50-94"><a href="#cb50-94" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb50-95"><a href="#cb50-95" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb50-96"><a href="#cb50-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(tous_resultats)</span>
+<span id="cb50-97"><a href="#cb50-97" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-98"><a href="#cb50-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-99"><a href="#cb50-99" aria-hidden="true" tabindex="-1"></a><span class="co"># Téléchargement</span></span>
+<span id="cb50-100"><a href="#cb50-100" aria-hidden="true" tabindex="-1"></a>donnees_brutes <span class="ot">&lt;-</span> <span class="fu">telecharger_donnees</span>()</span>
+<span id="cb50-101"><a href="#cb50-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-102"><a href="#cb50-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-105"><a href="#cb50-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-106"><a href="#cb50-106" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: info-donnees</span></span>
+<span id="cb50-107"><a href="#cb50-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-108"><a href="#cb50-108" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Nombre de chantiers téléchargés:"</span>, <span class="fu">nrow</span>(donnees_brutes), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-109"><a href="#cb50-109" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Nombre de variables:"</span>, <span class="fu">ncol</span>(donnees_brutes))</span>
+<span id="cb50-110"><a href="#cb50-110" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-111"><a href="#cb50-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-112"><a href="#cb50-112" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb50-113"><a href="#cb50-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-114"><a href="#cb50-114" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb50-114"><a href="#cb50-114" aria-hidden="true" tabindex="-1"></a><span class="fu"># Nettoyage des données</span></span>
 <span id="cb50-115"><a href="#cb50-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-116"><a href="#cb50-116" aria-hidden="true" tabindex="-1"></a><span class="fu"># Nettoyage des données</span></span>
+<span id="cb50-116"><a href="#cb50-116" aria-hidden="true" tabindex="-1"></a><span class="fu">## Transformation des colonnes</span></span>
 <span id="cb50-117"><a href="#cb50-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-118"><a href="#cb50-118" aria-hidden="true" tabindex="-1"></a><span class="fu">## Transformation des colonnes</span></span>
-<span id="cb50-119"><a href="#cb50-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-122"><a href="#cb50-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-123"><a href="#cb50-123" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: nettoyage</span></span>
-<span id="cb50-124"><a href="#cb50-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-125"><a href="#cb50-125" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher les colonnes disponibles pour debug</span></span>
-<span id="cb50-126"><a href="#cb50-126" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Colonnes disponibles:</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-127"><a href="#cb50-127" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">names</span>(donnees_brutes))</span>
-<span id="cb50-128"><a href="#cb50-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-129"><a href="#cb50-129" aria-hidden="true" tabindex="-1"></a><span class="co"># Nettoyage des noms de colonnes</span></span>
-<span id="cb50-130"><a href="#cb50-130" aria-hidden="true" tabindex="-1"></a>chantiers <span class="ot">&lt;-</span> donnees_brutes <span class="sc">%&gt;%</span></span>
-<span id="cb50-131"><a href="#cb50-131" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
-<span id="cb50-132"><a href="#cb50-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-133"><a href="#cb50-133" aria-hidden="true" tabindex="-1"></a><span class="co"># Créer la colonne reference si elle n'existe pas</span></span>
-<span id="cb50-134"><a href="#cb50-134" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"reference"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
-<span id="cb50-135"><a href="#cb50-135" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="st">"chantier_reference"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
-<span id="cb50-136"><a href="#cb50-136" aria-hidden="true" tabindex="-1"></a>    chantiers<span class="sc">$</span>reference <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_reference</span>
-<span id="cb50-137"><a href="#cb50-137" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb50-138"><a href="#cb50-138" aria-hidden="true" tabindex="-1"></a>    chantiers<span class="sc">$</span>reference <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"CHANTIER_"</span>, <span class="fu">seq_len</span>(<span class="fu">nrow</span>(chantiers)))</span>
-<span id="cb50-139"><a href="#cb50-139" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb50-140"><a href="#cb50-140" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-141"><a href="#cb50-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-142"><a href="#cb50-142" aria-hidden="true" tabindex="-1"></a><span class="co"># Créer les autres colonnes nécessaires</span></span>
-<span id="cb50-143"><a href="#cb50-143" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"code_postal"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"cp_arrondissement"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
-<span id="cb50-144"><a href="#cb50-144" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>code_postal <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>cp_arrondissement</span>
-<span id="cb50-145"><a href="#cb50-145" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-146"><a href="#cb50-146" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"date_debut"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"chantier_date_debut"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
-<span id="cb50-147"><a href="#cb50-147" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>date_debut <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_date_debut</span>
-<span id="cb50-148"><a href="#cb50-148" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-149"><a href="#cb50-149" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"date_fin"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"chantier_date_fin"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
-<span id="cb50-150"><a href="#cb50-150" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>date_fin <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_date_fin</span>
-<span id="cb50-151"><a href="#cb50-151" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-152"><a href="#cb50-152" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"surface"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"chantier_localisation_surface"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
-<span id="cb50-153"><a href="#cb50-153" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>surface <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_localisation_surface</span>
-<span id="cb50-154"><a href="#cb50-154" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-155"><a href="#cb50-155" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"nature"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"chantier_synthese"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
-<span id="cb50-156"><a href="#cb50-156" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>nature <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_synthese</span>
-<span id="cb50-157"><a href="#cb50-157" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-158"><a href="#cb50-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-159"><a href="#cb50-159" aria-hidden="true" tabindex="-1"></a>chantiers <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-160"><a href="#cb50-160" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb50-161"><a href="#cb50-161" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Conversion des dates</span></span>
-<span id="cb50-162"><a href="#cb50-162" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_debut =</span> <span class="fu">as.Date</span>(date_debut),</span>
-<span id="cb50-163"><a href="#cb50-163" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_fin =</span> <span class="fu">as.Date</span>(date_fin),</span>
-<span id="cb50-164"><a href="#cb50-164" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calcul de la durée</span></span>
-<span id="cb50-165"><a href="#cb50-165" aria-hidden="true" tabindex="-1"></a>    <span class="at">duree_jours =</span> <span class="fu">as.numeric</span>(date_fin <span class="sc">-</span> date_debut),</span>
-<span id="cb50-166"><a href="#cb50-166" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extraction de l'arrondissement</span></span>
-<span id="cb50-167"><a href="#cb50-167" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrondissement =</span> <span class="fu">as.integer</span>(<span class="fu">str_sub</span>(<span class="fu">as.character</span>(code_postal), <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>)),</span>
-<span id="cb50-168"><a href="#cb50-168" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Année et mois</span></span>
-<span id="cb50-169"><a href="#cb50-169" aria-hidden="true" tabindex="-1"></a>    <span class="at">annee_debut =</span> <span class="fu">year</span>(date_debut),</span>
-<span id="cb50-170"><a href="#cb50-170" aria-hidden="true" tabindex="-1"></a>    <span class="at">mois_debut =</span> <span class="fu">month</span>(date_debut, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">abbr =</span> <span class="cn">FALSE</span>),</span>
-<span id="cb50-171"><a href="#cb50-171" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Statut du chantier</span></span>
-<span id="cb50-172"><a href="#cb50-172" aria-hidden="true" tabindex="-1"></a>    <span class="at">statut =</span> <span class="fu">case_when</span>(</span>
-<span id="cb50-173"><a href="#cb50-173" aria-hidden="true" tabindex="-1"></a>      date_fin <span class="sc">&lt;</span> <span class="fu">Sys.Date</span>() <span class="sc">~</span> <span class="st">"Terminé"</span>,</span>
-<span id="cb50-174"><a href="#cb50-174" aria-hidden="true" tabindex="-1"></a>      date_debut <span class="sc">&gt;</span> <span class="fu">Sys.Date</span>() <span class="sc">~</span> <span class="st">"À venir"</span>,</span>
-<span id="cb50-175"><a href="#cb50-175" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"En cours"</span></span>
-<span id="cb50-176"><a href="#cb50-176" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb50-177"><a href="#cb50-177" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Nettoyage surface</span></span>
-<span id="cb50-178"><a href="#cb50-178" aria-hidden="true" tabindex="-1"></a>    <span class="at">surface =</span> <span class="fu">as.numeric</span>(<span class="fu">str_replace_all</span>(<span class="fu">as.character</span>(surface), <span class="st">"[^0-9.]"</span>, <span class="st">""</span>)),</span>
-<span id="cb50-179"><a href="#cb50-179" aria-hidden="true" tabindex="-1"></a>    <span class="at">surface =</span> <span class="fu">replace_na</span>(surface, <span class="dv">0</span>)</span>
-<span id="cb50-180"><a href="#cb50-180" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb50-181"><a href="#cb50-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-182"><a href="#cb50-182" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraction des coordonnées GPS</span></span>
-<span id="cb50-183"><a href="#cb50-183" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="st">"geo_point_2d_lat"</span> <span class="sc">%in%</span> <span class="fu">colnames</span>(chantiers) <span class="sc">&amp;</span> <span class="st">"geo_point_2d_lon"</span> <span class="sc">%in%</span> <span class="fu">colnames</span>(chantiers)) {</span>
-<span id="cb50-184"><a href="#cb50-184" aria-hidden="true" tabindex="-1"></a>  chantiers <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-185"><a href="#cb50-185" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb50-186"><a href="#cb50-186" aria-hidden="true" tabindex="-1"></a>      <span class="at">latitude =</span> <span class="fu">as.numeric</span>(geo_point_2d_lat),</span>
-<span id="cb50-187"><a href="#cb50-187" aria-hidden="true" tabindex="-1"></a>      <span class="at">longitude =</span> <span class="fu">as.numeric</span>(geo_point_2d_lon)</span>
-<span id="cb50-188"><a href="#cb50-188" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb50-189"><a href="#cb50-189" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span>(<span class="st">"geo_point_2d"</span> <span class="sc">%in%</span> <span class="fu">colnames</span>(chantiers)) {</span>
-<span id="cb50-190"><a href="#cb50-190" aria-hidden="true" tabindex="-1"></a>  chantiers <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-191"><a href="#cb50-191" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb50-192"><a href="#cb50-192" aria-hidden="true" tabindex="-1"></a>      <span class="at">latitude =</span> <span class="fu">sapply</span>(geo_point_2d, <span class="cf">function</span>(x) <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(x) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(x) <span class="sc">&gt;=</span> <span class="dv">1</span>) x[[<span class="dv">1</span>]] <span class="cf">else</span> <span class="cn">NA</span>),</span>
-<span id="cb50-193"><a href="#cb50-193" aria-hidden="true" tabindex="-1"></a>      <span class="at">longitude =</span> <span class="fu">sapply</span>(geo_point_2d, <span class="cf">function</span>(x) <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(x) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(x) <span class="sc">&gt;=</span> <span class="dv">2</span>) x[[<span class="dv">2</span>]] <span class="cf">else</span> <span class="cn">NA</span>)</span>
-<span id="cb50-194"><a href="#cb50-194" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb50-195"><a href="#cb50-195" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb50-196"><a href="#cb50-196" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>latitude <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb50-197"><a href="#cb50-197" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>longitude <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb50-198"><a href="#cb50-198" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-199"><a href="#cb50-199" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-120"><a href="#cb50-120" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-121"><a href="#cb50-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: nettoyage</span></span>
+<span id="cb50-122"><a href="#cb50-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-123"><a href="#cb50-123" aria-hidden="true" tabindex="-1"></a><span class="co"># Afficher les colonnes disponibles pour debug</span></span>
+<span id="cb50-124"><a href="#cb50-124" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Colonnes disponibles:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-125"><a href="#cb50-125" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">names</span>(donnees_brutes))</span>
+<span id="cb50-126"><a href="#cb50-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-127"><a href="#cb50-127" aria-hidden="true" tabindex="-1"></a><span class="co"># Nettoyage des noms de colonnes</span></span>
+<span id="cb50-128"><a href="#cb50-128" aria-hidden="true" tabindex="-1"></a>chantiers <span class="ot">&lt;-</span> donnees_brutes <span class="sc">%&gt;%</span></span>
+<span id="cb50-129"><a href="#cb50-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb50-130"><a href="#cb50-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-131"><a href="#cb50-131" aria-hidden="true" tabindex="-1"></a><span class="co"># Créer la colonne reference si elle n'existe pas</span></span>
+<span id="cb50-132"><a href="#cb50-132" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"reference"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
+<span id="cb50-133"><a href="#cb50-133" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="st">"chantier_reference"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
+<span id="cb50-134"><a href="#cb50-134" aria-hidden="true" tabindex="-1"></a>    chantiers<span class="sc">$</span>reference <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_reference</span>
+<span id="cb50-135"><a href="#cb50-135" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb50-136"><a href="#cb50-136" aria-hidden="true" tabindex="-1"></a>    chantiers<span class="sc">$</span>reference <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"CHANTIER_"</span>, <span class="fu">seq_len</span>(<span class="fu">nrow</span>(chantiers)))</span>
+<span id="cb50-137"><a href="#cb50-137" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb50-138"><a href="#cb50-138" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-139"><a href="#cb50-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-140"><a href="#cb50-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Créer les autres colonnes nécessaires</span></span>
+<span id="cb50-141"><a href="#cb50-141" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"code_postal"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"cp_arrondissement"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
+<span id="cb50-142"><a href="#cb50-142" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>code_postal <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>cp_arrondissement</span>
+<span id="cb50-143"><a href="#cb50-143" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-144"><a href="#cb50-144" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"date_debut"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"chantier_date_debut"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
+<span id="cb50-145"><a href="#cb50-145" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>date_debut <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_date_debut</span>
+<span id="cb50-146"><a href="#cb50-146" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-147"><a href="#cb50-147" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"date_fin"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"chantier_date_fin"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
+<span id="cb50-148"><a href="#cb50-148" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>date_fin <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_date_fin</span>
+<span id="cb50-149"><a href="#cb50-149" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-150"><a href="#cb50-150" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"surface"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"chantier_localisation_surface"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
+<span id="cb50-151"><a href="#cb50-151" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>surface <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_localisation_surface</span>
+<span id="cb50-152"><a href="#cb50-152" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-153"><a href="#cb50-153" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="st">"nature"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers) <span class="sc">&amp;&amp;</span> <span class="st">"chantier_synthese"</span> <span class="sc">%in%</span> <span class="fu">names</span>(chantiers)) {</span>
+<span id="cb50-154"><a href="#cb50-154" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>nature <span class="ot">&lt;-</span> chantiers<span class="sc">$</span>chantier_synthese</span>
+<span id="cb50-155"><a href="#cb50-155" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-156"><a href="#cb50-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-157"><a href="#cb50-157" aria-hidden="true" tabindex="-1"></a>chantiers <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-158"><a href="#cb50-158" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb50-159"><a href="#cb50-159" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Conversion des dates</span></span>
+<span id="cb50-160"><a href="#cb50-160" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_debut =</span> <span class="fu">as.Date</span>(date_debut),</span>
+<span id="cb50-161"><a href="#cb50-161" aria-hidden="true" tabindex="-1"></a>    <span class="at">date_fin =</span> <span class="fu">as.Date</span>(date_fin),</span>
+<span id="cb50-162"><a href="#cb50-162" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calcul de la durée</span></span>
+<span id="cb50-163"><a href="#cb50-163" aria-hidden="true" tabindex="-1"></a>    <span class="at">duree_jours =</span> <span class="fu">as.numeric</span>(date_fin <span class="sc">-</span> date_debut),</span>
+<span id="cb50-164"><a href="#cb50-164" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extraction de l'arrondissement</span></span>
+<span id="cb50-165"><a href="#cb50-165" aria-hidden="true" tabindex="-1"></a>    <span class="at">arrondissement =</span> <span class="fu">as.integer</span>(<span class="fu">str_sub</span>(<span class="fu">as.character</span>(code_postal), <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>)),</span>
+<span id="cb50-166"><a href="#cb50-166" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Année et mois</span></span>
+<span id="cb50-167"><a href="#cb50-167" aria-hidden="true" tabindex="-1"></a>    <span class="at">annee_debut =</span> <span class="fu">year</span>(date_debut),</span>
+<span id="cb50-168"><a href="#cb50-168" aria-hidden="true" tabindex="-1"></a>    <span class="at">mois_debut =</span> <span class="fu">month</span>(date_debut, <span class="at">label =</span> <span class="cn">TRUE</span>, <span class="at">abbr =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb50-169"><a href="#cb50-169" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Statut du chantier</span></span>
+<span id="cb50-170"><a href="#cb50-170" aria-hidden="true" tabindex="-1"></a>    <span class="at">statut =</span> <span class="fu">case_when</span>(</span>
+<span id="cb50-171"><a href="#cb50-171" aria-hidden="true" tabindex="-1"></a>      date_fin <span class="sc">&lt;</span> <span class="fu">Sys.Date</span>() <span class="sc">~</span> <span class="st">"Terminé"</span>,</span>
+<span id="cb50-172"><a href="#cb50-172" aria-hidden="true" tabindex="-1"></a>      date_debut <span class="sc">&gt;</span> <span class="fu">Sys.Date</span>() <span class="sc">~</span> <span class="st">"À venir"</span>,</span>
+<span id="cb50-173"><a href="#cb50-173" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"En cours"</span></span>
+<span id="cb50-174"><a href="#cb50-174" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb50-175"><a href="#cb50-175" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Nettoyage surface</span></span>
+<span id="cb50-176"><a href="#cb50-176" aria-hidden="true" tabindex="-1"></a>    <span class="at">surface =</span> <span class="fu">as.numeric</span>(<span class="fu">str_replace_all</span>(<span class="fu">as.character</span>(surface), <span class="st">"[^0-9.]"</span>, <span class="st">""</span>)),</span>
+<span id="cb50-177"><a href="#cb50-177" aria-hidden="true" tabindex="-1"></a>    <span class="at">surface =</span> <span class="fu">replace_na</span>(surface, <span class="dv">0</span>)</span>
+<span id="cb50-178"><a href="#cb50-178" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb50-179"><a href="#cb50-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-180"><a href="#cb50-180" aria-hidden="true" tabindex="-1"></a><span class="co"># Extraction des coordonnées GPS</span></span>
+<span id="cb50-181"><a href="#cb50-181" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="st">"geo_point_2d_lat"</span> <span class="sc">%in%</span> <span class="fu">colnames</span>(chantiers) <span class="sc">&amp;</span> <span class="st">"geo_point_2d_lon"</span> <span class="sc">%in%</span> <span class="fu">colnames</span>(chantiers)) {</span>
+<span id="cb50-182"><a href="#cb50-182" aria-hidden="true" tabindex="-1"></a>  chantiers <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-183"><a href="#cb50-183" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb50-184"><a href="#cb50-184" aria-hidden="true" tabindex="-1"></a>      <span class="at">latitude =</span> <span class="fu">as.numeric</span>(geo_point_2d_lat),</span>
+<span id="cb50-185"><a href="#cb50-185" aria-hidden="true" tabindex="-1"></a>      <span class="at">longitude =</span> <span class="fu">as.numeric</span>(geo_point_2d_lon)</span>
+<span id="cb50-186"><a href="#cb50-186" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb50-187"><a href="#cb50-187" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span>(<span class="st">"geo_point_2d"</span> <span class="sc">%in%</span> <span class="fu">colnames</span>(chantiers)) {</span>
+<span id="cb50-188"><a href="#cb50-188" aria-hidden="true" tabindex="-1"></a>  chantiers <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-189"><a href="#cb50-189" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb50-190"><a href="#cb50-190" aria-hidden="true" tabindex="-1"></a>      <span class="at">latitude =</span> <span class="fu">sapply</span>(geo_point_2d, <span class="cf">function</span>(x) <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(x) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(x) <span class="sc">&gt;=</span> <span class="dv">1</span>) x[[<span class="dv">1</span>]] <span class="cf">else</span> <span class="cn">NA</span>),</span>
+<span id="cb50-191"><a href="#cb50-191" aria-hidden="true" tabindex="-1"></a>      <span class="at">longitude =</span> <span class="fu">sapply</span>(geo_point_2d, <span class="cf">function</span>(x) <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.null</span>(x) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(x) <span class="sc">&gt;=</span> <span class="dv">2</span>) x[[<span class="dv">2</span>]] <span class="cf">else</span> <span class="cn">NA</span>)</span>
+<span id="cb50-192"><a href="#cb50-192" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb50-193"><a href="#cb50-193" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb50-194"><a href="#cb50-194" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>latitude <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb50-195"><a href="#cb50-195" aria-hidden="true" tabindex="-1"></a>  chantiers<span class="sc">$</span>longitude <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb50-196"><a href="#cb50-196" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-197"><a href="#cb50-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-198"><a href="#cb50-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-199"><a href="#cb50-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Aperçu des données nettoyées</span></span>
 <span id="cb50-200"><a href="#cb50-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-201"><a href="#cb50-201" aria-hidden="true" tabindex="-1"></a><span class="fu">## Aperçu des données nettoyées</span></span>
-<span id="cb50-202"><a href="#cb50-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-205"><a href="#cb50-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-206"><a href="#cb50-206" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: apercu-donnees</span></span>
-<span id="cb50-207"><a href="#cb50-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-208"><a href="#cb50-208" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Période couverte:"</span>, <span class="fu">as.character</span>(<span class="fu">min</span>(chantiers<span class="sc">$</span>date_debut, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), </span>
-<span id="cb50-209"><a href="#cb50-209" aria-hidden="true" tabindex="-1"></a>    <span class="st">"à"</span>, <span class="fu">as.character</span>(<span class="fu">max</span>(chantiers<span class="sc">$</span>date_fin, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-210"><a href="#cb50-210" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Nombre total de chantiers:"</span>, <span class="fu">nrow</span>(chantiers))</span>
-<span id="cb50-211"><a href="#cb50-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-203"><a href="#cb50-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-204"><a href="#cb50-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: apercu-donnees</span></span>
+<span id="cb50-205"><a href="#cb50-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-206"><a href="#cb50-206" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Période couverte:"</span>, <span class="fu">as.character</span>(<span class="fu">min</span>(chantiers<span class="sc">$</span>date_debut, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), </span>
+<span id="cb50-207"><a href="#cb50-207" aria-hidden="true" tabindex="-1"></a>    <span class="st">"à"</span>, <span class="fu">as.character</span>(<span class="fu">max</span>(chantiers<span class="sc">$</span>date_fin, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-208"><a href="#cb50-208" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Nombre total de chantiers:"</span>, <span class="fu">nrow</span>(chantiers))</span>
+<span id="cb50-209"><a href="#cb50-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-210"><a href="#cb50-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-211"><a href="#cb50-211" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb50-212"><a href="#cb50-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-213"><a href="#cb50-213" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb50-213"><a href="#cb50-213" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analyses Statistiques</span></span>
 <span id="cb50-214"><a href="#cb50-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-215"><a href="#cb50-215" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analyses Statistiques</span></span>
+<span id="cb50-215"><a href="#cb50-215" aria-hidden="true" tabindex="-1"></a><span class="fu">## Répartition par arrondissement</span></span>
 <span id="cb50-216"><a href="#cb50-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-217"><a href="#cb50-217" aria-hidden="true" tabindex="-1"></a><span class="fu">## Répartition par arrondissement</span></span>
-<span id="cb50-218"><a href="#cb50-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-221"><a href="#cb50-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-222"><a href="#cb50-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stats-arrondissement</span></span>
-<span id="cb50-223"><a href="#cb50-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-224"><a href="#cb50-224" aria-hidden="true" tabindex="-1"></a>stats_arr <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-225"><a href="#cb50-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arrondissement)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-226"><a href="#cb50-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(arrondissement, <span class="at">name =</span> <span class="st">"nb_chantiers"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-227"><a href="#cb50-227" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(nb_chantiers)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-228"><a href="#cb50-228" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pourcentage =</span> <span class="fu">round</span>(nb_chantiers <span class="sc">/</span> <span class="fu">sum</span>(nb_chantiers) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>))</span>
-<span id="cb50-229"><a href="#cb50-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-230"><a href="#cb50-230" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage en tableau</span></span>
-<span id="cb50-231"><a href="#cb50-231" aria-hidden="true" tabindex="-1"></a>stats_arr <span class="sc">%&gt;%</span></span>
-<span id="cb50-232"><a href="#cb50-232" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-233"><a href="#cb50-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(</span>
-<span id="cb50-234"><a href="#cb50-234" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Arrondissement"</span>, <span class="st">"Nb Chantiers"</span>, <span class="st">"Pourcentage (%)"</span>),</span>
-<span id="cb50-235"><a href="#cb50-235" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Top 10 des arrondissements par nombre de chantiers"</span></span>
-<span id="cb50-236"><a href="#cb50-236" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb50-237"><a href="#cb50-237" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
-<span id="cb50-238"><a href="#cb50-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-219"><a href="#cb50-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-220"><a href="#cb50-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stats-arrondissement</span></span>
+<span id="cb50-221"><a href="#cb50-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-222"><a href="#cb50-222" aria-hidden="true" tabindex="-1"></a>stats_arr <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-223"><a href="#cb50-223" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(arrondissement)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-224"><a href="#cb50-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(arrondissement, <span class="at">name =</span> <span class="st">"nb_chantiers"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-225"><a href="#cb50-225" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(nb_chantiers)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-226"><a href="#cb50-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pourcentage =</span> <span class="fu">round</span>(nb_chantiers <span class="sc">/</span> <span class="fu">sum</span>(nb_chantiers) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>))</span>
+<span id="cb50-227"><a href="#cb50-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-228"><a href="#cb50-228" aria-hidden="true" tabindex="-1"></a><span class="co"># Affichage en tableau</span></span>
+<span id="cb50-229"><a href="#cb50-229" aria-hidden="true" tabindex="-1"></a>stats_arr <span class="sc">%&gt;%</span></span>
+<span id="cb50-230"><a href="#cb50-230" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-231"><a href="#cb50-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(</span>
+<span id="cb50-232"><a href="#cb50-232" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Arrondissement"</span>, <span class="st">"Nb Chantiers"</span>, <span class="st">"Pourcentage (%)"</span>),</span>
+<span id="cb50-233"><a href="#cb50-233" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Top 10 des arrondissements par nombre de chantiers"</span></span>
+<span id="cb50-234"><a href="#cb50-234" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb50-235"><a href="#cb50-235" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
+<span id="cb50-236"><a href="#cb50-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-237"><a href="#cb50-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-238"><a href="#cb50-238" aria-hidden="true" tabindex="-1"></a><span class="fu">## Répartition par nature de chantier</span></span>
 <span id="cb50-239"><a href="#cb50-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-240"><a href="#cb50-240" aria-hidden="true" tabindex="-1"></a><span class="fu">## Répartition par nature de chantier</span></span>
-<span id="cb50-241"><a href="#cb50-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-244"><a href="#cb50-244" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-245"><a href="#cb50-245" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stats-nature</span></span>
-<span id="cb50-246"><a href="#cb50-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-247"><a href="#cb50-247" aria-hidden="true" tabindex="-1"></a>stats_nature <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-248"><a href="#cb50-248" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(nature)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-249"><a href="#cb50-249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(nature, <span class="at">name =</span> <span class="st">"nb_chantiers"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-250"><a href="#cb50-250" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(nb_chantiers)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-251"><a href="#cb50-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pourcentage =</span> <span class="fu">round</span>(nb_chantiers <span class="sc">/</span> <span class="fu">sum</span>(nb_chantiers) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>))</span>
-<span id="cb50-252"><a href="#cb50-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-253"><a href="#cb50-253" aria-hidden="true" tabindex="-1"></a>stats_nature <span class="sc">%&gt;%</span></span>
-<span id="cb50-254"><a href="#cb50-254" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(</span>
-<span id="cb50-255"><a href="#cb50-255" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Nature"</span>, <span class="st">"Nb Chantiers"</span>, <span class="st">"Pourcentage (%)"</span>),</span>
-<span id="cb50-256"><a href="#cb50-256" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Répartition par nature de chantier"</span></span>
-<span id="cb50-257"><a href="#cb50-257" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb50-258"><a href="#cb50-258" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
-<span id="cb50-259"><a href="#cb50-259" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-242"><a href="#cb50-242" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-243"><a href="#cb50-243" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stats-nature</span></span>
+<span id="cb50-244"><a href="#cb50-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-245"><a href="#cb50-245" aria-hidden="true" tabindex="-1"></a>stats_nature <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-246"><a href="#cb50-246" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(nature)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-247"><a href="#cb50-247" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(nature, <span class="at">name =</span> <span class="st">"nb_chantiers"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-248"><a href="#cb50-248" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(nb_chantiers)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-249"><a href="#cb50-249" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pourcentage =</span> <span class="fu">round</span>(nb_chantiers <span class="sc">/</span> <span class="fu">sum</span>(nb_chantiers) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>))</span>
+<span id="cb50-250"><a href="#cb50-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-251"><a href="#cb50-251" aria-hidden="true" tabindex="-1"></a>stats_nature <span class="sc">%&gt;%</span></span>
+<span id="cb50-252"><a href="#cb50-252" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(</span>
+<span id="cb50-253"><a href="#cb50-253" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Nature"</span>, <span class="st">"Nb Chantiers"</span>, <span class="st">"Pourcentage (%)"</span>),</span>
+<span id="cb50-254"><a href="#cb50-254" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Répartition par nature de chantier"</span></span>
+<span id="cb50-255"><a href="#cb50-255" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb50-256"><a href="#cb50-256" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
+<span id="cb50-257"><a href="#cb50-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-258"><a href="#cb50-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-259"><a href="#cb50-259" aria-hidden="true" tabindex="-1"></a><span class="fu">## Statistiques sur la durée</span></span>
 <span id="cb50-260"><a href="#cb50-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-261"><a href="#cb50-261" aria-hidden="true" tabindex="-1"></a><span class="fu">## Statistiques sur la durée</span></span>
-<span id="cb50-262"><a href="#cb50-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-265"><a href="#cb50-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-266"><a href="#cb50-266" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stats-duree</span></span>
-<span id="cb50-267"><a href="#cb50-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-268"><a href="#cb50-268" aria-hidden="true" tabindex="-1"></a>chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-269"><a href="#cb50-269" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duree_jours) <span class="sc">&amp;</span> duree_jours <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-270"><a href="#cb50-270" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb50-271"><a href="#cb50-271" aria-hidden="true" tabindex="-1"></a>    <span class="at">Minimum =</span> <span class="fu">min</span>(duree_jours),</span>
-<span id="cb50-272"><a href="#cb50-272" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">1er Quartile</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">quantile</span>(duree_jours, <span class="fl">0.25</span>),</span>
-<span id="cb50-273"><a href="#cb50-273" aria-hidden="true" tabindex="-1"></a>    Médiane <span class="ot">=</span> <span class="fu">median</span>(duree_jours),</span>
-<span id="cb50-274"><a href="#cb50-274" aria-hidden="true" tabindex="-1"></a>    <span class="at">Moyenne =</span> <span class="fu">round</span>(<span class="fu">mean</span>(duree_jours), <span class="dv">1</span>),</span>
-<span id="cb50-275"><a href="#cb50-275" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">3e Quartile</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">quantile</span>(duree_jours, <span class="fl">0.75</span>),</span>
-<span id="cb50-276"><a href="#cb50-276" aria-hidden="true" tabindex="-1"></a>    <span class="at">Maximum =</span> <span class="fu">max</span>(duree_jours)</span>
-<span id="cb50-277"><a href="#cb50-277" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb50-278"><a href="#cb50-278" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Statistiques sur la durée des chantiers (en jours)"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-279"><a href="#cb50-279" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
-<span id="cb50-280"><a href="#cb50-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-263"><a href="#cb50-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-264"><a href="#cb50-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stats-duree</span></span>
+<span id="cb50-265"><a href="#cb50-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-266"><a href="#cb50-266" aria-hidden="true" tabindex="-1"></a>chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-267"><a href="#cb50-267" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duree_jours) <span class="sc">&amp;</span> duree_jours <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-268"><a href="#cb50-268" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb50-269"><a href="#cb50-269" aria-hidden="true" tabindex="-1"></a>    <span class="at">Minimum =</span> <span class="fu">min</span>(duree_jours),</span>
+<span id="cb50-270"><a href="#cb50-270" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">1er Quartile</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">quantile</span>(duree_jours, <span class="fl">0.25</span>),</span>
+<span id="cb50-271"><a href="#cb50-271" aria-hidden="true" tabindex="-1"></a>    Médiane <span class="ot">=</span> <span class="fu">median</span>(duree_jours),</span>
+<span id="cb50-272"><a href="#cb50-272" aria-hidden="true" tabindex="-1"></a>    <span class="at">Moyenne =</span> <span class="fu">round</span>(<span class="fu">mean</span>(duree_jours), <span class="dv">1</span>),</span>
+<span id="cb50-273"><a href="#cb50-273" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">3e Quartile</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">quantile</span>(duree_jours, <span class="fl">0.75</span>),</span>
+<span id="cb50-274"><a href="#cb50-274" aria-hidden="true" tabindex="-1"></a>    <span class="at">Maximum =</span> <span class="fu">max</span>(duree_jours)</span>
+<span id="cb50-275"><a href="#cb50-275" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb50-276"><a href="#cb50-276" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Statistiques sur la durée des chantiers (en jours)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-277"><a href="#cb50-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
+<span id="cb50-278"><a href="#cb50-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-279"><a href="#cb50-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-280"><a href="#cb50-280" aria-hidden="true" tabindex="-1"></a><span class="fu">## Répartition par statut</span></span>
 <span id="cb50-281"><a href="#cb50-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-282"><a href="#cb50-282" aria-hidden="true" tabindex="-1"></a><span class="fu">## Répartition par statut</span></span>
-<span id="cb50-283"><a href="#cb50-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-286"><a href="#cb50-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-287"><a href="#cb50-287" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stats-statut</span></span>
-<span id="cb50-288"><a href="#cb50-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-289"><a href="#cb50-289" aria-hidden="true" tabindex="-1"></a>stats_statut <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-290"><a href="#cb50-290" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(statut, <span class="at">name =</span> <span class="st">"nb_chantiers"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-291"><a href="#cb50-291" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pourcentage =</span> <span class="fu">round</span>(nb_chantiers <span class="sc">/</span> <span class="fu">sum</span>(nb_chantiers) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>))</span>
-<span id="cb50-292"><a href="#cb50-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-293"><a href="#cb50-293" aria-hidden="true" tabindex="-1"></a>stats_statut <span class="sc">%&gt;%</span></span>
-<span id="cb50-294"><a href="#cb50-294" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(</span>
-<span id="cb50-295"><a href="#cb50-295" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Statut"</span>, <span class="st">"Nb Chantiers"</span>, <span class="st">"Pourcentage (%)"</span>),</span>
-<span id="cb50-296"><a href="#cb50-296" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Répartition par statut"</span></span>
-<span id="cb50-297"><a href="#cb50-297" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb50-298"><a href="#cb50-298" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
-<span id="cb50-299"><a href="#cb50-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-284"><a href="#cb50-284" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-285"><a href="#cb50-285" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: stats-statut</span></span>
+<span id="cb50-286"><a href="#cb50-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-287"><a href="#cb50-287" aria-hidden="true" tabindex="-1"></a>stats_statut <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-288"><a href="#cb50-288" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(statut, <span class="at">name =</span> <span class="st">"nb_chantiers"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-289"><a href="#cb50-289" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pourcentage =</span> <span class="fu">round</span>(nb_chantiers <span class="sc">/</span> <span class="fu">sum</span>(nb_chantiers) <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">2</span>))</span>
+<span id="cb50-290"><a href="#cb50-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-291"><a href="#cb50-291" aria-hidden="true" tabindex="-1"></a>stats_statut <span class="sc">%&gt;%</span></span>
+<span id="cb50-292"><a href="#cb50-292" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(</span>
+<span id="cb50-293"><a href="#cb50-293" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Statut"</span>, <span class="st">"Nb Chantiers"</span>, <span class="st">"Pourcentage (%)"</span>),</span>
+<span id="cb50-294"><a href="#cb50-294" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Répartition par statut"</span></span>
+<span id="cb50-295"><a href="#cb50-295" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb50-296"><a href="#cb50-296" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
+<span id="cb50-297"><a href="#cb50-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-298"><a href="#cb50-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-299"><a href="#cb50-299" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb50-300"><a href="#cb50-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-301"><a href="#cb50-301" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb50-301"><a href="#cb50-301" aria-hidden="true" tabindex="-1"></a><span class="fu"># Visualisations</span></span>
 <span id="cb50-302"><a href="#cb50-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-303"><a href="#cb50-303" aria-hidden="true" tabindex="-1"></a><span class="fu"># Visualisations</span></span>
+<span id="cb50-303"><a href="#cb50-303" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chantiers par arrondissement</span></span>
 <span id="cb50-304"><a href="#cb50-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-305"><a href="#cb50-305" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chantiers par arrondissement</span></span>
-<span id="cb50-306"><a href="#cb50-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-309"><a href="#cb50-309" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-310"><a href="#cb50-310" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-arrondissement</span></span>
-<span id="cb50-311"><a href="#cb50-311" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Nombre de chantiers par arrondissement parisien"</span></span>
-<span id="cb50-312"><a href="#cb50-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-313"><a href="#cb50-313" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stats_arr, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(<span class="fu">factor</span>(arrondissement), nb_chantiers), <span class="at">y =</span> nb_chantiers)) <span class="sc">+</span></span>
-<span id="cb50-314"><a href="#cb50-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb50-315"><a href="#cb50-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> nb_chantiers), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb50-316"><a href="#cb50-316" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb50-317"><a href="#cb50-317" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb50-318"><a href="#cb50-318" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Nombre de chantiers par arrondissement"</span>,</span>
-<span id="cb50-319"><a href="#cb50-319" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Source: OpenData Paris"</span>,</span>
-<span id="cb50-320"><a href="#cb50-320" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Arrondissement"</span>,</span>
-<span id="cb50-321"><a href="#cb50-321" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Nombre de chantiers"</span></span>
-<span id="cb50-322"><a href="#cb50-322" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb50-323"><a href="#cb50-323" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb50-324"><a href="#cb50-324" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>)) <span class="sc">+</span></span>
-<span id="cb50-325"><a href="#cb50-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>)))</span>
-<span id="cb50-326"><a href="#cb50-326" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-307"><a href="#cb50-307" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-308"><a href="#cb50-308" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-arrondissement</span></span>
+<span id="cb50-309"><a href="#cb50-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Nombre de chantiers par arrondissement parisien"</span></span>
+<span id="cb50-310"><a href="#cb50-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-311"><a href="#cb50-311" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stats_arr, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(<span class="fu">factor</span>(arrondissement), nb_chantiers), <span class="at">y =</span> nb_chantiers)) <span class="sc">+</span></span>
+<span id="cb50-312"><a href="#cb50-312" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb50-313"><a href="#cb50-313" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> nb_chantiers), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb50-314"><a href="#cb50-314" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb50-315"><a href="#cb50-315" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb50-316"><a href="#cb50-316" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Nombre de chantiers par arrondissement"</span>,</span>
+<span id="cb50-317"><a href="#cb50-317" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Source: OpenData Paris"</span>,</span>
+<span id="cb50-318"><a href="#cb50-318" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Arrondissement"</span>,</span>
+<span id="cb50-319"><a href="#cb50-319" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Nombre de chantiers"</span></span>
+<span id="cb50-320"><a href="#cb50-320" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb50-321"><a href="#cb50-321" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb50-322"><a href="#cb50-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>)) <span class="sc">+</span></span>
+<span id="cb50-323"><a href="#cb50-323" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>)))</span>
+<span id="cb50-324"><a href="#cb50-324" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-325"><a href="#cb50-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-326"><a href="#cb50-326" aria-hidden="true" tabindex="-1"></a><span class="fu">## Répartition par nature</span></span>
 <span id="cb50-327"><a href="#cb50-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-328"><a href="#cb50-328" aria-hidden="true" tabindex="-1"></a><span class="fu">## Répartition par nature</span></span>
-<span id="cb50-329"><a href="#cb50-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-332"><a href="#cb50-332" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-333"><a href="#cb50-333" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-nature</span></span>
-<span id="cb50-334"><a href="#cb50-334" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Répartition des chantiers par nature"</span></span>
-<span id="cb50-335"><a href="#cb50-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-336"><a href="#cb50-336" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stats_nature, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(nature, nb_chantiers), <span class="at">y =</span> nb_chantiers, <span class="at">fill =</span> nature)) <span class="sc">+</span></span>
-<span id="cb50-337"><a href="#cb50-337" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb50-338"><a href="#cb50-338" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> nb_chantiers), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb50-339"><a href="#cb50-339" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb50-340"><a href="#cb50-340" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb50-341"><a href="#cb50-341" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Répartition par nature de chantier"</span>,</span>
-<span id="cb50-342"><a href="#cb50-342" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Nature"</span>,</span>
-<span id="cb50-343"><a href="#cb50-343" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Nombre de chantiers"</span></span>
-<span id="cb50-344"><a href="#cb50-344" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb50-345"><a href="#cb50-345" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb50-346"><a href="#cb50-346" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>)) <span class="sc">+</span></span>
-<span id="cb50-347"><a href="#cb50-347" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
-<span id="cb50-348"><a href="#cb50-348" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>)</span>
-<span id="cb50-349"><a href="#cb50-349" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-330"><a href="#cb50-330" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-331"><a href="#cb50-331" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-nature</span></span>
+<span id="cb50-332"><a href="#cb50-332" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Répartition des chantiers par nature"</span></span>
+<span id="cb50-333"><a href="#cb50-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-334"><a href="#cb50-334" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stats_nature, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(nature, nb_chantiers), <span class="at">y =</span> nb_chantiers, <span class="at">fill =</span> nature)) <span class="sc">+</span></span>
+<span id="cb50-335"><a href="#cb50-335" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb50-336"><a href="#cb50-336" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> nb_chantiers), <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb50-337"><a href="#cb50-337" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb50-338"><a href="#cb50-338" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb50-339"><a href="#cb50-339" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Répartition par nature de chantier"</span>,</span>
+<span id="cb50-340"><a href="#cb50-340" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Nature"</span>,</span>
+<span id="cb50-341"><a href="#cb50-341" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Nombre de chantiers"</span></span>
+<span id="cb50-342"><a href="#cb50-342" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb50-343"><a href="#cb50-343" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb50-344"><a href="#cb50-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>)) <span class="sc">+</span></span>
+<span id="cb50-345"><a href="#cb50-345" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span></span>
+<span id="cb50-346"><a href="#cb50-346" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Set2"</span>)</span>
+<span id="cb50-347"><a href="#cb50-347" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-348"><a href="#cb50-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-349"><a href="#cb50-349" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distribution de la durée</span></span>
 <span id="cb50-350"><a href="#cb50-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-351"><a href="#cb50-351" aria-hidden="true" tabindex="-1"></a><span class="fu">## Distribution de la durée</span></span>
-<span id="cb50-352"><a href="#cb50-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-355"><a href="#cb50-355" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-356"><a href="#cb50-356" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-duree</span></span>
-<span id="cb50-357"><a href="#cb50-357" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution de la durée des chantiers (&lt; 1 an)"</span></span>
+<span id="cb50-353"><a href="#cb50-353" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-354"><a href="#cb50-354" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-duree</span></span>
+<span id="cb50-355"><a href="#cb50-355" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Distribution de la durée des chantiers (&lt; 1 an)"</span></span>
+<span id="cb50-356"><a href="#cb50-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-357"><a href="#cb50-357" aria-hidden="true" tabindex="-1"></a>mediane_duree <span class="ot">&lt;-</span> <span class="fu">median</span>(chantiers<span class="sc">$</span>duree_jours[chantiers<span class="sc">$</span>duree_jours <span class="sc">&gt;</span> <span class="dv">0</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb50-358"><a href="#cb50-358" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-359"><a href="#cb50-359" aria-hidden="true" tabindex="-1"></a>mediane_duree <span class="ot">&lt;-</span> <span class="fu">median</span>(chantiers<span class="sc">$</span>duree_jours[chantiers<span class="sc">$</span>duree_jours <span class="sc">&gt;</span> <span class="dv">0</span>], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-360"><a href="#cb50-360" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-361"><a href="#cb50-361" aria-hidden="true" tabindex="-1"></a>chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-362"><a href="#cb50-362" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duree_jours) <span class="sc">&amp;</span> duree_jours <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> duree_jours <span class="sc">&lt;</span> <span class="dv">365</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-363"><a href="#cb50-363" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> duree_jours)) <span class="sc">+</span></span>
-<span id="cb50-364"><a href="#cb50-364" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"darkgreen"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb50-365"><a href="#cb50-365" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mediane_duree, <span class="at">color =</span> <span class="st">"darkred"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb50-366"><a href="#cb50-366" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> mediane_duree <span class="sc">+</span> <span class="dv">20</span>, <span class="at">y =</span> <span class="cn">Inf</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Médiane:"</span>, <span class="fu">round</span>(mediane_duree), <span class="st">"jours"</span>),</span>
-<span id="cb50-367"><a href="#cb50-367" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"darkred"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span></span>
-<span id="cb50-368"><a href="#cb50-368" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb50-369"><a href="#cb50-369" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution de la durée des chantiers"</span>,</span>
-<span id="cb50-370"><a href="#cb50-370" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Durée (jours)"</span>,</span>
-<span id="cb50-371"><a href="#cb50-371" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Nombre de chantiers"</span></span>
-<span id="cb50-372"><a href="#cb50-372" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb50-373"><a href="#cb50-373" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb50-374"><a href="#cb50-374" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>))</span>
-<span id="cb50-375"><a href="#cb50-375" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-359"><a href="#cb50-359" aria-hidden="true" tabindex="-1"></a>chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-360"><a href="#cb50-360" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(duree_jours) <span class="sc">&amp;</span> duree_jours <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> duree_jours <span class="sc">&lt;</span> <span class="dv">365</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-361"><a href="#cb50-361" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> duree_jours)) <span class="sc">+</span></span>
+<span id="cb50-362"><a href="#cb50-362" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">40</span>, <span class="at">fill =</span> <span class="st">"darkgreen"</span>, <span class="at">color =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb50-363"><a href="#cb50-363" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> mediane_duree, <span class="at">color =</span> <span class="st">"darkred"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb50-364"><a href="#cb50-364" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> mediane_duree <span class="sc">+</span> <span class="dv">20</span>, <span class="at">y =</span> <span class="cn">Inf</span>, <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Médiane:"</span>, <span class="fu">round</span>(mediane_duree), <span class="st">"jours"</span>),</span>
+<span id="cb50-365"><a href="#cb50-365" aria-hidden="true" tabindex="-1"></a>           <span class="at">vjust =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"darkred"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span></span>
+<span id="cb50-366"><a href="#cb50-366" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb50-367"><a href="#cb50-367" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution de la durée des chantiers"</span>,</span>
+<span id="cb50-368"><a href="#cb50-368" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Durée (jours)"</span>,</span>
+<span id="cb50-369"><a href="#cb50-369" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Nombre de chantiers"</span></span>
+<span id="cb50-370"><a href="#cb50-370" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb50-371"><a href="#cb50-371" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb50-372"><a href="#cb50-372" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>))</span>
+<span id="cb50-373"><a href="#cb50-373" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-374"><a href="#cb50-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-375"><a href="#cb50-375" aria-hidden="true" tabindex="-1"></a><span class="fu">## Évolution temporelle</span></span>
 <span id="cb50-376"><a href="#cb50-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-377"><a href="#cb50-377" aria-hidden="true" tabindex="-1"></a><span class="fu">## Évolution temporelle</span></span>
-<span id="cb50-378"><a href="#cb50-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-381"><a href="#cb50-381" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-382"><a href="#cb50-382" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-evolution</span></span>
-<span id="cb50-383"><a href="#cb50-383" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Évolution mensuelle du nombre de chantiers débutés"</span></span>
-<span id="cb50-384"><a href="#cb50-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-385"><a href="#cb50-385" aria-hidden="true" tabindex="-1"></a>evolution <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-386"><a href="#cb50-386" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(date_debut)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-387"><a href="#cb50-387" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mois =</span> <span class="fu">floor_date</span>(date_debut, <span class="st">"month"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-388"><a href="#cb50-388" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(mois, <span class="at">name =</span> <span class="st">"nb_chantiers"</span>)</span>
-<span id="cb50-389"><a href="#cb50-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-390"><a href="#cb50-390" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evolution, <span class="fu">aes</span>(<span class="at">x =</span> mois, <span class="at">y =</span> nb_chantiers)) <span class="sc">+</span></span>
-<span id="cb50-391"><a href="#cb50-391" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb50-392"><a href="#cb50-392" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb50-393"><a href="#cb50-393" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"darkred"</span>) <span class="sc">+</span></span>
-<span id="cb50-394"><a href="#cb50-394" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb50-395"><a href="#cb50-395" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Évolution mensuelle des chantiers"</span>,</span>
-<span id="cb50-396"><a href="#cb50-396" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
-<span id="cb50-397"><a href="#cb50-397" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Nombre de chantiers"</span></span>
-<span id="cb50-398"><a href="#cb50-398" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb50-399"><a href="#cb50-399" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb50-400"><a href="#cb50-400" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb50-401"><a href="#cb50-401" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb50-402"><a href="#cb50-402" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
-<span id="cb50-403"><a href="#cb50-403" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb50-404"><a href="#cb50-404" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_labels =</span> <span class="st">"%b %Y"</span>, <span class="at">date_breaks =</span> <span class="st">"3 months"</span>)</span>
-<span id="cb50-405"><a href="#cb50-405" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-379"><a href="#cb50-379" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-380"><a href="#cb50-380" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-evolution</span></span>
+<span id="cb50-381"><a href="#cb50-381" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Évolution mensuelle du nombre de chantiers débutés"</span></span>
+<span id="cb50-382"><a href="#cb50-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-383"><a href="#cb50-383" aria-hidden="true" tabindex="-1"></a>evolution <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-384"><a href="#cb50-384" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(date_debut)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-385"><a href="#cb50-385" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mois =</span> <span class="fu">floor_date</span>(date_debut, <span class="st">"month"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-386"><a href="#cb50-386" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(mois, <span class="at">name =</span> <span class="st">"nb_chantiers"</span>)</span>
+<span id="cb50-387"><a href="#cb50-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-388"><a href="#cb50-388" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evolution, <span class="fu">aes</span>(<span class="at">x =</span> mois, <span class="at">y =</span> nb_chantiers)) <span class="sc">+</span></span>
+<span id="cb50-389"><a href="#cb50-389" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb50-390"><a href="#cb50-390" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb50-391"><a href="#cb50-391" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="st">"darkred"</span>) <span class="sc">+</span></span>
+<span id="cb50-392"><a href="#cb50-392" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb50-393"><a href="#cb50-393" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Évolution mensuelle des chantiers"</span>,</span>
+<span id="cb50-394"><a href="#cb50-394" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb50-395"><a href="#cb50-395" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Nombre de chantiers"</span></span>
+<span id="cb50-396"><a href="#cb50-396" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb50-397"><a href="#cb50-397" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb50-398"><a href="#cb50-398" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb50-399"><a href="#cb50-399" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb50-400"><a href="#cb50-400" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb50-401"><a href="#cb50-401" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb50-402"><a href="#cb50-402" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_labels =</span> <span class="st">"%b %Y"</span>, <span class="at">date_breaks =</span> <span class="st">"3 months"</span>)</span>
+<span id="cb50-403"><a href="#cb50-403" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-404"><a href="#cb50-404" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-405"><a href="#cb50-405" aria-hidden="true" tabindex="-1"></a><span class="fu">## Camembert par statut</span></span>
 <span id="cb50-406"><a href="#cb50-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-407"><a href="#cb50-407" aria-hidden="true" tabindex="-1"></a><span class="fu">## Camembert par statut</span></span>
-<span id="cb50-408"><a href="#cb50-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-411"><a href="#cb50-411" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-412"><a href="#cb50-412" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-statut</span></span>
-<span id="cb50-413"><a href="#cb50-413" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Répartition des chantiers par statut"</span></span>
-<span id="cb50-414"><a href="#cb50-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-415"><a href="#cb50-415" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stats_statut, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> nb_chantiers, <span class="at">fill =</span> statut)) <span class="sc">+</span></span>
-<span id="cb50-416"><a href="#cb50-416" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb50-417"><a href="#cb50-417" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb50-418"><a href="#cb50-418" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(pourcentage, <span class="st">"%"</span>)), </span>
-<span id="cb50-419"><a href="#cb50-419" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb50-420"><a href="#cb50-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Répartition par statut"</span>, <span class="at">fill =</span> <span class="st">"Statut"</span>) <span class="sc">+</span></span>
-<span id="cb50-421"><a href="#cb50-421" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb50-422"><a href="#cb50-422" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
-<span id="cb50-423"><a href="#cb50-423" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"En cours"</span> <span class="ot">=</span> <span class="st">"orange"</span>, <span class="st">"Terminé"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"À venir"</span> <span class="ot">=</span> <span class="st">"steelblue"</span>))</span>
-<span id="cb50-424"><a href="#cb50-424" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-409"><a href="#cb50-409" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-410"><a href="#cb50-410" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-statut</span></span>
+<span id="cb50-411"><a href="#cb50-411" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Répartition des chantiers par statut"</span></span>
+<span id="cb50-412"><a href="#cb50-412" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-413"><a href="#cb50-413" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(stats_statut, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> nb_chantiers, <span class="at">fill =</span> statut)) <span class="sc">+</span></span>
+<span id="cb50-414"><a href="#cb50-414" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb50-415"><a href="#cb50-415" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb50-416"><a href="#cb50-416" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(pourcentage, <span class="st">"%"</span>)), </span>
+<span id="cb50-417"><a href="#cb50-417" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb50-418"><a href="#cb50-418" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Répartition par statut"</span>, <span class="at">fill =</span> <span class="st">"Statut"</span>) <span class="sc">+</span></span>
+<span id="cb50-419"><a href="#cb50-419" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb50-420"><a href="#cb50-420" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb50-421"><a href="#cb50-421" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"En cours"</span> <span class="ot">=</span> <span class="st">"orange"</span>, <span class="st">"Terminé"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"À venir"</span> <span class="ot">=</span> <span class="st">"steelblue"</span>))</span>
+<span id="cb50-422"><a href="#cb50-422" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-423"><a href="#cb50-423" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-424"><a href="#cb50-424" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb50-425"><a href="#cb50-425" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-426"><a href="#cb50-426" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb50-426"><a href="#cb50-426" aria-hidden="true" tabindex="-1"></a><span class="fu"># Carte Interactive</span></span>
 <span id="cb50-427"><a href="#cb50-427" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-428"><a href="#cb50-428" aria-hidden="true" tabindex="-1"></a><span class="fu"># Carte Interactive</span></span>
-<span id="cb50-429"><a href="#cb50-429" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-432"><a href="#cb50-432" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-433"><a href="#cb50-433" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: carte-interactive</span></span>
-<span id="cb50-434"><a href="#cb50-434" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Localisation des chantiers à Paris"</span></span>
-<span id="cb50-435"><a href="#cb50-435" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-436"><a href="#cb50-436" aria-hidden="true" tabindex="-1"></a><span class="co"># Préparation des données</span></span>
-<span id="cb50-437"><a href="#cb50-437" aria-hidden="true" tabindex="-1"></a>chantiers_carte <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-438"><a href="#cb50-438" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(latitude) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(longitude))</span>
-<span id="cb50-439"><a href="#cb50-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-440"><a href="#cb50-440" aria-hidden="true" tabindex="-1"></a><span class="co"># Échantillonnage si nécessaire</span></span>
-<span id="cb50-441"><a href="#cb50-441" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(chantiers_carte) <span class="sc">&gt;</span> <span class="dv">500</span>) {</span>
-<span id="cb50-442"><a href="#cb50-442" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb50-443"><a href="#cb50-443" aria-hidden="true" tabindex="-1"></a>  chantiers_carte <span class="ot">&lt;-</span> chantiers_carte <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">500</span>)</span>
-<span id="cb50-444"><a href="#cb50-444" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-445"><a href="#cb50-445" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-446"><a href="#cb50-446" aria-hidden="true" tabindex="-1"></a><span class="co"># Création de la carte</span></span>
-<span id="cb50-447"><a href="#cb50-447" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(chantiers_carte) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb50-448"><a href="#cb50-448" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Palette de couleurs pour le statut</span></span>
-<span id="cb50-449"><a href="#cb50-449" aria-hidden="true" tabindex="-1"></a>  statuts_presents <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">na.omit</span>(chantiers_carte<span class="sc">$</span>statut))</span>
-<span id="cb50-450"><a href="#cb50-450" aria-hidden="true" tabindex="-1"></a>  couleurs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Terminé"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"En cours"</span> <span class="ot">=</span> <span class="st">"orange"</span>, <span class="st">"À venir"</span> <span class="ot">=</span> <span class="st">"blue"</span>)</span>
-<span id="cb50-451"><a href="#cb50-451" aria-hidden="true" tabindex="-1"></a>  pal <span class="ot">&lt;-</span> <span class="fu">colorFactor</span>(couleurs[statuts_presents], statuts_presents)</span>
-<span id="cb50-452"><a href="#cb50-452" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb50-453"><a href="#cb50-453" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Créer le popup de manière sécurisée</span></span>
-<span id="cb50-454"><a href="#cb50-454" aria-hidden="true" tabindex="-1"></a>  chantiers_carte<span class="sc">$</span>popup_text <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
-<span id="cb50-455"><a href="#cb50-455" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strong&gt;Référence:&lt;/strong&gt; "</span>, chantiers_carte<span class="sc">$</span>reference, <span class="st">"&lt;br&gt;"</span>,</span>
-<span id="cb50-456"><a href="#cb50-456" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strong&gt;Arrondissement:&lt;/strong&gt; "</span>, chantiers_carte<span class="sc">$</span>arrondissement, <span class="st">"ème&lt;br&gt;"</span>,</span>
-<span id="cb50-457"><a href="#cb50-457" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strong&gt;Surface:&lt;/strong&gt; "</span>, <span class="fu">round</span>(chantiers_carte<span class="sc">$</span>surface, <span class="dv">2</span>), <span class="st">" m²&lt;br&gt;"</span>,</span>
-<span id="cb50-458"><a href="#cb50-458" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strong&gt;Statut:&lt;/strong&gt; "</span>, chantiers_carte<span class="sc">$</span>statut</span>
-<span id="cb50-459"><a href="#cb50-459" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb50-460"><a href="#cb50-460" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb50-461"><a href="#cb50-461" aria-hidden="true" tabindex="-1"></a>  <span class="fu">leaflet</span>(chantiers_carte) <span class="sc">%&gt;%</span></span>
-<span id="cb50-462"><a href="#cb50-462" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb50-463"><a href="#cb50-463" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setView</span>(<span class="at">lng =</span> <span class="fl">2.3522</span>, <span class="at">lat =</span> <span class="fl">48.8566</span>, <span class="at">zoom =</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-464"><a href="#cb50-464" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addCircleMarkers</span>(</span>
-<span id="cb50-465"><a href="#cb50-465" aria-hidden="true" tabindex="-1"></a>      <span class="at">lng =</span> <span class="sc">~</span>longitude,</span>
-<span id="cb50-466"><a href="#cb50-466" aria-hidden="true" tabindex="-1"></a>      <span class="at">lat =</span> <span class="sc">~</span>latitude,</span>
-<span id="cb50-467"><a href="#cb50-467" aria-hidden="true" tabindex="-1"></a>      <span class="at">radius =</span> <span class="dv">5</span>,</span>
-<span id="cb50-468"><a href="#cb50-468" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="sc">~</span><span class="fu">pal</span>(statut),</span>
-<span id="cb50-469"><a href="#cb50-469" aria-hidden="true" tabindex="-1"></a>      <span class="at">fillOpacity =</span> <span class="fl">0.6</span>,</span>
-<span id="cb50-470"><a href="#cb50-470" aria-hidden="true" tabindex="-1"></a>      <span class="at">popup =</span> <span class="sc">~</span>popup_text</span>
-<span id="cb50-471"><a href="#cb50-471" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb50-472"><a href="#cb50-472" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addLegend</span>(</span>
-<span id="cb50-473"><a href="#cb50-473" aria-hidden="true" tabindex="-1"></a>      <span class="at">position =</span> <span class="st">"bottomright"</span>,</span>
-<span id="cb50-474"><a href="#cb50-474" aria-hidden="true" tabindex="-1"></a>      <span class="at">pal =</span> pal,</span>
-<span id="cb50-475"><a href="#cb50-475" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="sc">~</span>statut,</span>
-<span id="cb50-476"><a href="#cb50-476" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Statut"</span></span>
-<span id="cb50-477"><a href="#cb50-477" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb50-478"><a href="#cb50-478" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb50-479"><a href="#cb50-479" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Aucune donnée avec coordonnées GPS disponible pour la carte."</span>)</span>
-<span id="cb50-480"><a href="#cb50-480" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-481"><a href="#cb50-481" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-430"><a href="#cb50-430" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-431"><a href="#cb50-431" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: carte-interactive</span></span>
+<span id="cb50-432"><a href="#cb50-432" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Localisation des chantiers à Paris"</span></span>
+<span id="cb50-433"><a href="#cb50-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-434"><a href="#cb50-434" aria-hidden="true" tabindex="-1"></a><span class="co"># Préparation des données</span></span>
+<span id="cb50-435"><a href="#cb50-435" aria-hidden="true" tabindex="-1"></a>chantiers_carte <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-436"><a href="#cb50-436" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(latitude) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(longitude))</span>
+<span id="cb50-437"><a href="#cb50-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-438"><a href="#cb50-438" aria-hidden="true" tabindex="-1"></a><span class="co"># Échantillonnage si nécessaire</span></span>
+<span id="cb50-439"><a href="#cb50-439" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(chantiers_carte) <span class="sc">&gt;</span> <span class="dv">500</span>) {</span>
+<span id="cb50-440"><a href="#cb50-440" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb50-441"><a href="#cb50-441" aria-hidden="true" tabindex="-1"></a>  chantiers_carte <span class="ot">&lt;-</span> chantiers_carte <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">500</span>)</span>
+<span id="cb50-442"><a href="#cb50-442" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-443"><a href="#cb50-443" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-444"><a href="#cb50-444" aria-hidden="true" tabindex="-1"></a><span class="co"># Création de la carte</span></span>
+<span id="cb50-445"><a href="#cb50-445" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(chantiers_carte) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb50-446"><a href="#cb50-446" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Palette de couleurs pour le statut</span></span>
+<span id="cb50-447"><a href="#cb50-447" aria-hidden="true" tabindex="-1"></a>  statuts_presents <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">na.omit</span>(chantiers_carte<span class="sc">$</span>statut))</span>
+<span id="cb50-448"><a href="#cb50-448" aria-hidden="true" tabindex="-1"></a>  couleurs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Terminé"</span> <span class="ot">=</span> <span class="st">"green"</span>, <span class="st">"En cours"</span> <span class="ot">=</span> <span class="st">"orange"</span>, <span class="st">"À venir"</span> <span class="ot">=</span> <span class="st">"blue"</span>)</span>
+<span id="cb50-449"><a href="#cb50-449" aria-hidden="true" tabindex="-1"></a>  pal <span class="ot">&lt;-</span> <span class="fu">colorFactor</span>(couleurs[statuts_presents], statuts_presents)</span>
+<span id="cb50-450"><a href="#cb50-450" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb50-451"><a href="#cb50-451" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Créer le popup de manière sécurisée</span></span>
+<span id="cb50-452"><a href="#cb50-452" aria-hidden="true" tabindex="-1"></a>  chantiers_carte<span class="sc">$</span>popup_text <span class="ot">&lt;-</span> <span class="fu">paste0</span>(</span>
+<span id="cb50-453"><a href="#cb50-453" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strong&gt;Référence:&lt;/strong&gt; "</span>, chantiers_carte<span class="sc">$</span>reference, <span class="st">"&lt;br&gt;"</span>,</span>
+<span id="cb50-454"><a href="#cb50-454" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strong&gt;Arrondissement:&lt;/strong&gt; "</span>, chantiers_carte<span class="sc">$</span>arrondissement, <span class="st">"ème&lt;br&gt;"</span>,</span>
+<span id="cb50-455"><a href="#cb50-455" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strong&gt;Surface:&lt;/strong&gt; "</span>, <span class="fu">round</span>(chantiers_carte<span class="sc">$</span>surface, <span class="dv">2</span>), <span class="st">" m²&lt;br&gt;"</span>,</span>
+<span id="cb50-456"><a href="#cb50-456" aria-hidden="true" tabindex="-1"></a>    <span class="st">"&lt;strong&gt;Statut:&lt;/strong&gt; "</span>, chantiers_carte<span class="sc">$</span>statut</span>
+<span id="cb50-457"><a href="#cb50-457" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb50-458"><a href="#cb50-458" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb50-459"><a href="#cb50-459" aria-hidden="true" tabindex="-1"></a>  <span class="fu">leaflet</span>(chantiers_carte) <span class="sc">%&gt;%</span></span>
+<span id="cb50-460"><a href="#cb50-460" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb50-461"><a href="#cb50-461" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setView</span>(<span class="at">lng =</span> <span class="fl">2.3522</span>, <span class="at">lat =</span> <span class="fl">48.8566</span>, <span class="at">zoom =</span> <span class="dv">12</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-462"><a href="#cb50-462" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addCircleMarkers</span>(</span>
+<span id="cb50-463"><a href="#cb50-463" aria-hidden="true" tabindex="-1"></a>      <span class="at">lng =</span> <span class="sc">~</span>longitude,</span>
+<span id="cb50-464"><a href="#cb50-464" aria-hidden="true" tabindex="-1"></a>      <span class="at">lat =</span> <span class="sc">~</span>latitude,</span>
+<span id="cb50-465"><a href="#cb50-465" aria-hidden="true" tabindex="-1"></a>      <span class="at">radius =</span> <span class="dv">5</span>,</span>
+<span id="cb50-466"><a href="#cb50-466" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="sc">~</span><span class="fu">pal</span>(statut),</span>
+<span id="cb50-467"><a href="#cb50-467" aria-hidden="true" tabindex="-1"></a>      <span class="at">fillOpacity =</span> <span class="fl">0.6</span>,</span>
+<span id="cb50-468"><a href="#cb50-468" aria-hidden="true" tabindex="-1"></a>      <span class="at">popup =</span> <span class="sc">~</span>popup_text</span>
+<span id="cb50-469"><a href="#cb50-469" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb50-470"><a href="#cb50-470" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addLegend</span>(</span>
+<span id="cb50-471"><a href="#cb50-471" aria-hidden="true" tabindex="-1"></a>      <span class="at">position =</span> <span class="st">"bottomright"</span>,</span>
+<span id="cb50-472"><a href="#cb50-472" aria-hidden="true" tabindex="-1"></a>      <span class="at">pal =</span> pal,</span>
+<span id="cb50-473"><a href="#cb50-473" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="sc">~</span>statut,</span>
+<span id="cb50-474"><a href="#cb50-474" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Statut"</span></span>
+<span id="cb50-475"><a href="#cb50-475" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb50-476"><a href="#cb50-476" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb50-477"><a href="#cb50-477" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Aucune donnée avec coordonnées GPS disponible pour la carte."</span>)</span>
+<span id="cb50-478"><a href="#cb50-478" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-479"><a href="#cb50-479" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-480"><a href="#cb50-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-481"><a href="#cb50-481" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb50-482"><a href="#cb50-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-483"><a href="#cb50-483" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb50-483"><a href="#cb50-483" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analyses Avancées</span></span>
 <span id="cb50-484"><a href="#cb50-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-485"><a href="#cb50-485" aria-hidden="true" tabindex="-1"></a><span class="fu"># Analyses Avancées</span></span>
+<span id="cb50-485"><a href="#cb50-485" aria-hidden="true" tabindex="-1"></a><span class="fu">## Corrélation Surface vs Durée</span></span>
 <span id="cb50-486"><a href="#cb50-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-487"><a href="#cb50-487" aria-hidden="true" tabindex="-1"></a><span class="fu">## Corrélation Surface vs Durée</span></span>
-<span id="cb50-488"><a href="#cb50-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-491"><a href="#cb50-491" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-492"><a href="#cb50-492" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: correlation</span></span>
-<span id="cb50-493"><a href="#cb50-493" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-494"><a href="#cb50-494" aria-hidden="true" tabindex="-1"></a>donnees_corr <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-495"><a href="#cb50-495" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(surface <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> duree_jours <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb50-496"><a href="#cb50-496" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-497"><a href="#cb50-497" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(donnees_corr) <span class="sc">&gt;</span> <span class="dv">10</span>) {</span>
-<span id="cb50-498"><a href="#cb50-498" aria-hidden="true" tabindex="-1"></a>  test_corr <span class="ot">&lt;-</span> <span class="fu">cor.test</span>(donnees_corr<span class="sc">$</span>surface, donnees_corr<span class="sc">$</span>duree_jours)</span>
-<span id="cb50-499"><a href="#cb50-499" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb50-500"><a href="#cb50-500" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Coefficient de corrélation:"</span>, <span class="fu">round</span>(test_corr<span class="sc">$</span>estimate, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-501"><a href="#cb50-501" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"P-value:"</span>, <span class="fu">format</span>(test_corr<span class="sc">$</span>p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-502"><a href="#cb50-502" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb50-503"><a href="#cb50-503" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(test_corr<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>) {</span>
-<span id="cb50-504"><a href="#cb50-504" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"=&gt; Corrélation statistiquement significative"</span>)</span>
-<span id="cb50-505"><a href="#cb50-505" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb50-506"><a href="#cb50-506" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"=&gt; Corrélation non significative"</span>)</span>
-<span id="cb50-507"><a href="#cb50-507" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb50-508"><a href="#cb50-508" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-509"><a href="#cb50-509" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb50-510"><a href="#cb50-510" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-513"><a href="#cb50-513" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-514"><a href="#cb50-514" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correlation</span></span>
-<span id="cb50-515"><a href="#cb50-515" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Relation entre surface et durée des chantiers"</span></span>
-<span id="cb50-516"><a href="#cb50-516" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-517"><a href="#cb50-517" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(donnees_corr) <span class="sc">&gt;</span> <span class="dv">10</span>) {</span>
-<span id="cb50-518"><a href="#cb50-518" aria-hidden="true" tabindex="-1"></a>  donnees_corr <span class="sc">%&gt;%</span></span>
-<span id="cb50-519"><a href="#cb50-519" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(surface <span class="sc">&lt;</span> <span class="fu">quantile</span>(surface, <span class="fl">0.95</span>) <span class="sc">&amp;</span> duree_jours <span class="sc">&lt;</span> <span class="fu">quantile</span>(duree_jours, <span class="fl">0.95</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-520"><a href="#cb50-520" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> surface, <span class="at">y =</span> duree_jours)) <span class="sc">+</span></span>
-<span id="cb50-521"><a href="#cb50-521" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb50-522"><a href="#cb50-522" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb50-523"><a href="#cb50-523" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb50-524"><a href="#cb50-524" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Relation Surface vs Durée"</span>,</span>
-<span id="cb50-525"><a href="#cb50-525" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Corrélation:"</span>, <span class="fu">round</span>(test_corr<span class="sc">$</span>estimate, <span class="dv">3</span>)),</span>
-<span id="cb50-526"><a href="#cb50-526" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Surface (m²)"</span>,</span>
-<span id="cb50-527"><a href="#cb50-527" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Durée (jours)"</span></span>
-<span id="cb50-528"><a href="#cb50-528" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb50-529"><a href="#cb50-529" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb50-530"><a href="#cb50-530" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>))</span>
-<span id="cb50-531"><a href="#cb50-531" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-532"><a href="#cb50-532" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-489"><a href="#cb50-489" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-490"><a href="#cb50-490" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: correlation</span></span>
+<span id="cb50-491"><a href="#cb50-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-492"><a href="#cb50-492" aria-hidden="true" tabindex="-1"></a>donnees_corr <span class="ot">&lt;-</span> chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-493"><a href="#cb50-493" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(surface <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> duree_jours <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb50-494"><a href="#cb50-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-495"><a href="#cb50-495" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(donnees_corr) <span class="sc">&gt;</span> <span class="dv">10</span>) {</span>
+<span id="cb50-496"><a href="#cb50-496" aria-hidden="true" tabindex="-1"></a>  test_corr <span class="ot">&lt;-</span> <span class="fu">cor.test</span>(donnees_corr<span class="sc">$</span>surface, donnees_corr<span class="sc">$</span>duree_jours)</span>
+<span id="cb50-497"><a href="#cb50-497" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb50-498"><a href="#cb50-498" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Coefficient de corrélation:"</span>, <span class="fu">round</span>(test_corr<span class="sc">$</span>estimate, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-499"><a href="#cb50-499" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"P-value:"</span>, <span class="fu">format</span>(test_corr<span class="sc">$</span>p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-500"><a href="#cb50-500" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb50-501"><a href="#cb50-501" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(test_corr<span class="sc">$</span>p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>) {</span>
+<span id="cb50-502"><a href="#cb50-502" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"=&gt; Corrélation statistiquement significative"</span>)</span>
+<span id="cb50-503"><a href="#cb50-503" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb50-504"><a href="#cb50-504" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"=&gt; Corrélation non significative"</span>)</span>
+<span id="cb50-505"><a href="#cb50-505" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb50-506"><a href="#cb50-506" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-507"><a href="#cb50-507" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-508"><a href="#cb50-508" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-511"><a href="#cb50-511" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-512"><a href="#cb50-512" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-correlation</span></span>
+<span id="cb50-513"><a href="#cb50-513" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Relation entre surface et durée des chantiers"</span></span>
+<span id="cb50-514"><a href="#cb50-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-515"><a href="#cb50-515" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">nrow</span>(donnees_corr) <span class="sc">&gt;</span> <span class="dv">10</span>) {</span>
+<span id="cb50-516"><a href="#cb50-516" aria-hidden="true" tabindex="-1"></a>  donnees_corr <span class="sc">%&gt;%</span></span>
+<span id="cb50-517"><a href="#cb50-517" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(surface <span class="sc">&lt;</span> <span class="fu">quantile</span>(surface, <span class="fl">0.95</span>) <span class="sc">&amp;</span> duree_jours <span class="sc">&lt;</span> <span class="fu">quantile</span>(duree_jours, <span class="fl">0.95</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-518"><a href="#cb50-518" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> surface, <span class="at">y =</span> duree_jours)) <span class="sc">+</span></span>
+<span id="cb50-519"><a href="#cb50-519" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb50-520"><a href="#cb50-520" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb50-521"><a href="#cb50-521" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb50-522"><a href="#cb50-522" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> <span class="st">"Relation Surface vs Durée"</span>,</span>
+<span id="cb50-523"><a href="#cb50-523" aria-hidden="true" tabindex="-1"></a>      <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Corrélation:"</span>, <span class="fu">round</span>(test_corr<span class="sc">$</span>estimate, <span class="dv">3</span>)),</span>
+<span id="cb50-524"><a href="#cb50-524" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Surface (m²)"</span>,</span>
+<span id="cb50-525"><a href="#cb50-525" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Durée (jours)"</span></span>
+<span id="cb50-526"><a href="#cb50-526" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb50-527"><a href="#cb50-527" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb50-528"><a href="#cb50-528" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>))</span>
+<span id="cb50-529"><a href="#cb50-529" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-530"><a href="#cb50-530" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-531"><a href="#cb50-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-532"><a href="#cb50-532" aria-hidden="true" tabindex="-1"></a><span class="fu">## Top 10 des plus gros chantiers</span></span>
 <span id="cb50-533"><a href="#cb50-533" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-534"><a href="#cb50-534" aria-hidden="true" tabindex="-1"></a><span class="fu">## Top 10 des plus gros chantiers</span></span>
-<span id="cb50-535"><a href="#cb50-535" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-538"><a href="#cb50-538" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-539"><a href="#cb50-539" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: top10-surface</span></span>
-<span id="cb50-540"><a href="#cb50-540" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-541"><a href="#cb50-541" aria-hidden="true" tabindex="-1"></a>chantiers <span class="sc">%&gt;%</span></span>
-<span id="cb50-542"><a href="#cb50-542" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(surface)) <span class="sc">%&gt;%</span></span>
-<span id="cb50-543"><a href="#cb50-543" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(reference, arrondissement, nature, surface, duree_jours) <span class="sc">%&gt;%</span></span>
-<span id="cb50-544"><a href="#cb50-544" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb50-545"><a href="#cb50-545" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(</span>
-<span id="cb50-546"><a href="#cb50-546" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Référence"</span>, <span class="st">"Arr."</span>, <span class="st">"Nature"</span>, <span class="st">"Surface (m²)"</span>, <span class="st">"Durée (j)"</span>),</span>
-<span id="cb50-547"><a href="#cb50-547" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Top 10 des plus gros chantiers par surface"</span></span>
-<span id="cb50-548"><a href="#cb50-548" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb50-549"><a href="#cb50-549" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
-<span id="cb50-550"><a href="#cb50-550" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-536"><a href="#cb50-536" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-537"><a href="#cb50-537" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: top10-surface</span></span>
+<span id="cb50-538"><a href="#cb50-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-539"><a href="#cb50-539" aria-hidden="true" tabindex="-1"></a>chantiers <span class="sc">%&gt;%</span></span>
+<span id="cb50-540"><a href="#cb50-540" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(surface)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-541"><a href="#cb50-541" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(reference, arrondissement, nature, surface, duree_jours) <span class="sc">%&gt;%</span></span>
+<span id="cb50-542"><a href="#cb50-542" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb50-543"><a href="#cb50-543" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(</span>
+<span id="cb50-544"><a href="#cb50-544" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Référence"</span>, <span class="st">"Arr."</span>, <span class="st">"Nature"</span>, <span class="st">"Surface (m²)"</span>, <span class="st">"Durée (j)"</span>),</span>
+<span id="cb50-545"><a href="#cb50-545" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Top 10 des plus gros chantiers par surface"</span></span>
+<span id="cb50-546"><a href="#cb50-546" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb50-547"><a href="#cb50-547" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
+<span id="cb50-548"><a href="#cb50-548" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-549"><a href="#cb50-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-550"><a href="#cb50-550" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb50-551"><a href="#cb50-551" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-552"><a href="#cb50-552" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb50-552"><a href="#cb50-552" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
 <span id="cb50-553"><a href="#cb50-553" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-554"><a href="#cb50-554" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conclusion</span></span>
+<span id="cb50-554"><a href="#cb50-554" aria-hidden="true" tabindex="-1"></a><span class="fu">## Principaux résultats</span></span>
 <span id="cb50-555"><a href="#cb50-555" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-556"><a href="#cb50-556" aria-hidden="true" tabindex="-1"></a><span class="fu">## Principaux résultats</span></span>
-<span id="cb50-557"><a href="#cb50-557" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-560"><a href="#cb50-560" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb50-561"><a href="#cb50-561" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: resume-final</span></span>
-<span id="cb50-562"><a href="#cb50-562" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-563"><a href="#cb50-563" aria-hidden="true" tabindex="-1"></a>top3_arr <span class="ot">&lt;-</span> <span class="fu">head</span>(stats_arr, <span class="dv">3</span>)</span>
-<span id="cb50-564"><a href="#cb50-564" aria-hidden="true" tabindex="-1"></a>top3_nat <span class="ot">&lt;-</span> <span class="fu">head</span>(stats_nature, <span class="dv">3</span>)</span>
-<span id="cb50-565"><a href="#cb50-565" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-566"><a href="#cb50-566" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"📊 RÉSUMÉ DE L'ANALYSE</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-567"><a href="#cb50-567" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"======================</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb50-568"><a href="#cb50-568" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-569"><a href="#cb50-569" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"📍 Nombre total de chantiers:"</span>, <span class="fu">nrow</span>(chantiers), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-570"><a href="#cb50-570" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"📅 Période:"</span>, <span class="fu">as.character</span>(<span class="fu">min</span>(chantiers<span class="sc">$</span>date_debut, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), </span>
-<span id="cb50-571"><a href="#cb50-571" aria-hidden="true" tabindex="-1"></a>    <span class="st">"à"</span>, <span class="fu">as.character</span>(<span class="fu">max</span>(chantiers<span class="sc">$</span>date_fin, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-572"><a href="#cb50-572" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"📐 Surface totale:"</span>, <span class="fu">format</span>(<span class="fu">sum</span>(chantiers<span class="sc">$</span>surface, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">big.mark =</span> <span class="st">" "</span>), <span class="st">"m²</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb50-573"><a href="#cb50-573" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-574"><a href="#cb50-574" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"🏆 TOP 3 ARRONDISSEMENTS:</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-575"><a href="#cb50-575" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
-<span id="cb50-576"><a href="#cb50-576" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"   "</span>, i, <span class="st">". "</span>, top3_arr<span class="sc">$</span>arrondissement[i], <span class="st">"ème arr. - "</span>, top3_arr<span class="sc">$</span>nb_chantiers[i], <span class="st">" chantiers</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb50-577"><a href="#cb50-577" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-578"><a href="#cb50-578" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-579"><a href="#cb50-579" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">🏗️ TYPES DE CHANTIERS LES PLUS FRÉQUENTS:</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-580"><a href="#cb50-580" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">min</span>(<span class="dv">3</span>, <span class="fu">nrow</span>(top3_nat))) {</span>
-<span id="cb50-581"><a href="#cb50-581" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"   "</span>, i, <span class="st">". "</span>, top3_nat<span class="sc">$</span>nature[i], <span class="st">" ("</span>, top3_nat<span class="sc">$</span>pourcentage[i], <span class="st">"%)</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb50-582"><a href="#cb50-582" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb50-583"><a href="#cb50-583" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-584"><a href="#cb50-584" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">⏱️ Durée moyenne:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(chantiers<span class="sc">$</span>duree_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>), <span class="st">"jours</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb50-585"><a href="#cb50-585" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-558"><a href="#cb50-558" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb50-559"><a href="#cb50-559" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: resume-final</span></span>
+<span id="cb50-560"><a href="#cb50-560" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-561"><a href="#cb50-561" aria-hidden="true" tabindex="-1"></a>top3_arr <span class="ot">&lt;-</span> <span class="fu">head</span>(stats_arr, <span class="dv">3</span>)</span>
+<span id="cb50-562"><a href="#cb50-562" aria-hidden="true" tabindex="-1"></a>top3_nat <span class="ot">&lt;-</span> <span class="fu">head</span>(stats_nature, <span class="dv">3</span>)</span>
+<span id="cb50-563"><a href="#cb50-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-564"><a href="#cb50-564" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"📊 RÉSUMÉ DE L'ANALYSE</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-565"><a href="#cb50-565" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"======================</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb50-566"><a href="#cb50-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-567"><a href="#cb50-567" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"📍 Nombre total de chantiers:"</span>, <span class="fu">nrow</span>(chantiers), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-568"><a href="#cb50-568" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"📅 Période:"</span>, <span class="fu">as.character</span>(<span class="fu">min</span>(chantiers<span class="sc">$</span>date_debut, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), </span>
+<span id="cb50-569"><a href="#cb50-569" aria-hidden="true" tabindex="-1"></a>    <span class="st">"à"</span>, <span class="fu">as.character</span>(<span class="fu">max</span>(chantiers<span class="sc">$</span>date_fin, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-570"><a href="#cb50-570" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"📐 Surface totale:"</span>, <span class="fu">format</span>(<span class="fu">sum</span>(chantiers<span class="sc">$</span>surface, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">big.mark =</span> <span class="st">" "</span>), <span class="st">"m²</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
+<span id="cb50-571"><a href="#cb50-571" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-572"><a href="#cb50-572" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"🏆 TOP 3 ARRONDISSEMENTS:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-573"><a href="#cb50-573" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb50-574"><a href="#cb50-574" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"   "</span>, i, <span class="st">". "</span>, top3_arr<span class="sc">$</span>arrondissement[i], <span class="st">"ème arr. - "</span>, top3_arr<span class="sc">$</span>nb_chantiers[i], <span class="st">" chantiers</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb50-575"><a href="#cb50-575" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-576"><a href="#cb50-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-577"><a href="#cb50-577" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">🏗️ TYPES DE CHANTIERS LES PLUS FRÉQUENTS:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-578"><a href="#cb50-578" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">min</span>(<span class="dv">3</span>, <span class="fu">nrow</span>(top3_nat))) {</span>
+<span id="cb50-579"><a href="#cb50-579" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"   "</span>, i, <span class="st">". "</span>, top3_nat<span class="sc">$</span>nature[i], <span class="st">" ("</span>, top3_nat<span class="sc">$</span>pourcentage[i], <span class="st">"%)</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
+<span id="cb50-580"><a href="#cb50-580" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-581"><a href="#cb50-581" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-582"><a href="#cb50-582" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">⏱️ Durée moyenne:"</span>, <span class="fu">round</span>(<span class="fu">mean</span>(chantiers<span class="sc">$</span>duree_jours, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">1</span>), <span class="st">"jours</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb50-583"><a href="#cb50-583" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb50-584"><a href="#cb50-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-585"><a href="#cb50-585" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limites de l'étude</span></span>
 <span id="cb50-586"><a href="#cb50-586" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-587"><a href="#cb50-587" aria-hidden="true" tabindex="-1"></a><span class="fu">## Limites de l'étude</span></span>
-<span id="cb50-588"><a href="#cb50-588" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-589"><a href="#cb50-589" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Les données sont mises à jour régulièrement, les résultats peuvent varier</span>
-<span id="cb50-590"><a href="#cb50-590" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Certaines coordonnées GPS peuvent être manquantes</span>
-<span id="cb50-591"><a href="#cb50-591" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>L'analyse ne prend pas en compte les facteurs saisonniers</span>
+<span id="cb50-587"><a href="#cb50-587" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Les données sont mises à jour régulièrement, les résultats peuvent varier</span>
+<span id="cb50-588"><a href="#cb50-588" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Certaines coordonnées GPS peuvent être manquantes</span>
+<span id="cb50-589"><a href="#cb50-589" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>L'analyse ne prend pas en compte les facteurs saisonniers</span>
+<span id="cb50-590"><a href="#cb50-590" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-591"><a href="#cb50-591" aria-hidden="true" tabindex="-1"></a><span class="fu">## Perspectives</span></span>
 <span id="cb50-592"><a href="#cb50-592" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-593"><a href="#cb50-593" aria-hidden="true" tabindex="-1"></a><span class="fu">## Perspectives</span></span>
-<span id="cb50-594"><a href="#cb50-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-595"><a href="#cb50-595" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Analyse prédictive de la durée des chantiers</span>
-<span id="cb50-596"><a href="#cb50-596" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Étude de l'impact sur la circulation</span>
-<span id="cb50-597"><a href="#cb50-597" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Comparaison avec d'autres grandes villes</span>
+<span id="cb50-593"><a href="#cb50-593" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Analyse prédictive de la durée des chantiers</span>
+<span id="cb50-594"><a href="#cb50-594" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Étude de l'impact sur la circulation</span>
+<span id="cb50-595"><a href="#cb50-595" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Comparaison avec d'autres grandes villes</span>
+<span id="cb50-596"><a href="#cb50-596" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-597"><a href="#cb50-597" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb50-598"><a href="#cb50-598" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-599"><a href="#cb50-599" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb50-599"><a href="#cb50-599" aria-hidden="true" tabindex="-1"></a><span class="fu"># Références</span></span>
 <span id="cb50-600"><a href="#cb50-600" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-601"><a href="#cb50-601" aria-hidden="true" tabindex="-1"></a><span class="fu"># Références</span></span>
-<span id="cb50-602"><a href="#cb50-602" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-603"><a href="#cb50-603" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>OpenData Paris : <span class="ot">&lt;https://opendata.paris.fr/&gt;</span></span>
-<span id="cb50-604"><a href="#cb50-604" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Documentation Quarto : <span class="ot">&lt;https://quarto.org/&gt;</span></span>
-<span id="cb50-605"><a href="#cb50-605" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Package tidyverse : <span class="ot">&lt;https://www.tidyverse.org/&gt;</span></span>
+<span id="cb50-601"><a href="#cb50-601" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>OpenData Paris : <span class="ot">&lt;https://opendata.paris.fr/&gt;</span></span>
+<span id="cb50-602"><a href="#cb50-602" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Documentation Quarto : <span class="ot">&lt;https://quarto.org/&gt;</span></span>
+<span id="cb50-603"><a href="#cb50-603" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Package tidyverse : <span class="ot">&lt;https://www.tidyverse.org/&gt;</span></span>
 </code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
