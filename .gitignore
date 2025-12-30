@@ -1,0 +1,17 @@
+# Fichiers temporaires Quarto
+.quarto/
+_freeze/
+
+# Fichiers R
+.Rhistory
+.Rdata
+.RData
+.Ruserdata
+*.Rproj.user/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers de cache
+*.cache
