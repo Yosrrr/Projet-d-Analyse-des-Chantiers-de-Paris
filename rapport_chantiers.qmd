@@ -1,0 +1,567 @@
+---
+title: "Analyse des Chantiers à Paris"
+subtitle: "Projet de Data Science avec R"
+author: "[Votre Nom]"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-title: "Sommaire"
+    code-fold: true
+    code-summary: "Afficher le code"
+lang: fr
+---
+
+# Introduction
+
+## Contexte du projet
+
+Ce projet analyse les données des **chantiers de la Ville de Paris** disponibles sur la plateforme OpenData Paris. L'objectif est de comprendre la répartition géographique et temporelle des travaux dans la capitale française.
+
+## Questions de recherche
+
+1. Quels arrondissements concentrent le plus de chantiers ?
+2. Quelle est la durée moyenne des travaux ?
+3. Quels types de chantiers sont les plus fréquents ?
+4. Existe-t-il une corrélation entre la surface et la durée des chantiers ?
+
+## Source des données
+
+Les données proviennent de l'API OpenData Paris :
+
+- **URL** : <https://opendata.paris.fr/explore/dataset/chantiers-a-paris/>
+- **Format** : JSON
+- **Mise à jour** : Temps réel
+
+---
+
+# Méthodologie
+
+## Chargement des packages
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+# Chargement des packages nécessaires
+library(tidyverse)    # Manipulation de données + graphiques
+library(lubridate)    # Gestion des dates
+library(janitor)      # Nettoyage des données
+library(scales)       # Formatage des nombres
+library(leaflet)      # Cartes interactives
+library(knitr)        # Tableaux
+library(kableExtra)   # Amélioration des tableaux
+library(httr)         # Requêtes HTTP
+library(jsonlite)     # Lecture JSON
+```
+
+## Téléchargement des données
+
+On récupère les données directement depuis l'API OpenData Paris :
+
+```{r}
+#| label: telecharger-donnees
+#| cache: true
+
+# URL de l'API
+url_api <- "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/chantiers-a-paris/records"
+
+# Fonction pour télécharger toutes les données
+telecharger_donnees <- function(limit = 100) {
+  tous_resultats <- list()
+  offset <- 0
+  total <- NULL
+  
+  repeat {
+    url <- paste0(url_api, "?limit=", limit, "&offset=", offset)
+    reponse <- GET(url, timeout(60))
+    
+    if(status_code(reponse) != 200) break
+    
+    contenu <- content(reponse, "text", encoding = "UTF-8")
+    donnees <- fromJSON(contenu, flatten = TRUE)
+    
+    if(is.null(total)) total <- donnees$total_count
+    if(length(donnees$results) == 0) break
+    
+    tous_resultats[[length(tous_resultats) + 1]] <- donnees$results
+    offset <- offset + limit
+    if(offset >= total) break
+  }
+  
+  bind_rows(tous_resultats)
+}
+
+# Téléchargement
+donnees_brutes <- telecharger_donnees()
+```
+
+```{r}
+#| label: info-donnees
+
+cat("Nombre de chantiers téléchargés:", nrow(donnees_brutes), "\n")
+cat("Nombre de variables:", ncol(donnees_brutes))
+```
+
+---
+
+# Nettoyage des données
+
+## Transformation des colonnes
+
+```{r}
+#| label: nettoyage
+
+# Afficher les colonnes disponibles pour debug
+cat("Colonnes disponibles:\n")
+print(names(donnees_brutes))
+
+# Nettoyage des noms de colonnes
+chantiers <- donnees_brutes %>%
+  clean_names()
+
+# Créer la colonne reference si elle n'existe pas
+if(!"reference" %in% names(chantiers)) {
+  if("chantier_reference" %in% names(chantiers)) {
+    chantiers$reference <- chantiers$chantier_reference
+  } else {
+    chantiers$reference <- paste0("CHANTIER_", seq_len(nrow(chantiers)))
+  }
+}
+
+# Créer les autres colonnes nécessaires
+if(!"code_postal" %in% names(chantiers) && "cp_arrondissement" %in% names(chantiers)) {
+  chantiers$code_postal <- chantiers$cp_arrondissement
+}
+if(!"date_debut" %in% names(chantiers) && "chantier_date_debut" %in% names(chantiers)) {
+  chantiers$date_debut <- chantiers$chantier_date_debut
+}
+if(!"date_fin" %in% names(chantiers) && "chantier_date_fin" %in% names(chantiers)) {
+  chantiers$date_fin <- chantiers$chantier_date_fin
+}
+if(!"surface" %in% names(chantiers) && "chantier_localisation_surface" %in% names(chantiers)) {
+  chantiers$surface <- chantiers$chantier_localisation_surface
+}
+if(!"nature" %in% names(chantiers) && "chantier_synthese" %in% names(chantiers)) {
+  chantiers$nature <- chantiers$chantier_synthese
+}
+
+chantiers <- chantiers %>%
+  mutate(
+    # Conversion des dates
+    date_debut = as.Date(date_debut),
+    date_fin = as.Date(date_fin),
+    # Calcul de la durée
+    duree_jours = as.numeric(date_fin - date_debut),
+    # Extraction de l'arrondissement
+    arrondissement = as.integer(str_sub(as.character(code_postal), -2, -1)),
+    # Année et mois
+    annee_debut = year(date_debut),
+    mois_debut = month(date_debut, label = TRUE, abbr = FALSE),
+    # Statut du chantier
+    statut = case_when(
+      date_fin < Sys.Date() ~ "Terminé",
+      date_debut > Sys.Date() ~ "À venir",
+      TRUE ~ "En cours"
+    ),
+    # Nettoyage surface
+    surface = as.numeric(str_replace_all(as.character(surface), "[^0-9.]", "")),
+    surface = replace_na(surface, 0)
+  )
+
+# Extraction des coordonnées GPS
+if("geo_point_2d_lat" %in% colnames(chantiers) & "geo_point_2d_lon" %in% colnames(chantiers)) {
+  chantiers <- chantiers %>%
+    mutate(
+      latitude = as.numeric(geo_point_2d_lat),
+      longitude = as.numeric(geo_point_2d_lon)
+    )
+} else if("geo_point_2d" %in% colnames(chantiers)) {
+  chantiers <- chantiers %>%
+    mutate(
+      latitude = sapply(geo_point_2d, function(x) if(!is.null(x) && length(x) >= 1) x[[1]] else NA),
+      longitude = sapply(geo_point_2d, function(x) if(!is.null(x) && length(x) >= 2) x[[2]] else NA)
+    )
+} else {
+  chantiers$latitude <- NA
+  chantiers$longitude <- NA
+}
+```
+
+## Aperçu des données nettoyées
+
+```{r}
+#| label: apercu-donnees
+
+cat("Période couverte:", as.character(min(chantiers$date_debut, na.rm = TRUE)), 
+    "à", as.character(max(chantiers$date_fin, na.rm = TRUE)), "\n")
+cat("Nombre total de chantiers:", nrow(chantiers))
+```
+
+---
+
+# Analyses Statistiques
+
+## Répartition par arrondissement
+
+```{r}
+#| label: stats-arrondissement
+
+stats_arr <- chantiers %>%
+  filter(!is.na(arrondissement)) %>%
+  count(arrondissement, name = "nb_chantiers") %>%
+  arrange(desc(nb_chantiers)) %>%
+  mutate(pourcentage = round(nb_chantiers / sum(nb_chantiers) * 100, 2))
+
+# Affichage en tableau
+stats_arr %>%
+  head(10) %>%
+  kable(
+    col.names = c("Arrondissement", "Nb Chantiers", "Pourcentage (%)"),
+    caption = "Top 10 des arrondissements par nombre de chantiers"
+  ) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Répartition par nature de chantier
+
+```{r}
+#| label: stats-nature
+
+stats_nature <- chantiers %>%
+  filter(!is.na(nature)) %>%
+  count(nature, name = "nb_chantiers") %>%
+  arrange(desc(nb_chantiers)) %>%
+  mutate(pourcentage = round(nb_chantiers / sum(nb_chantiers) * 100, 2))
+
+stats_nature %>%
+  kable(
+    col.names = c("Nature", "Nb Chantiers", "Pourcentage (%)"),
+    caption = "Répartition par nature de chantier"
+  ) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Statistiques sur la durée
+
+```{r}
+#| label: stats-duree
+
+chantiers %>%
+  filter(!is.na(duree_jours) & duree_jours > 0) %>%
+  summarise(
+    Minimum = min(duree_jours),
+    `1er Quartile` = quantile(duree_jours, 0.25),
+    Médiane = median(duree_jours),
+    Moyenne = round(mean(duree_jours), 1),
+    `3e Quartile` = quantile(duree_jours, 0.75),
+    Maximum = max(duree_jours)
+  ) %>%
+  kable(caption = "Statistiques sur la durée des chantiers (en jours)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Répartition par statut
+
+```{r}
+#| label: stats-statut
+
+stats_statut <- chantiers %>%
+  count(statut, name = "nb_chantiers") %>%
+  mutate(pourcentage = round(nb_chantiers / sum(nb_chantiers) * 100, 2))
+
+stats_statut %>%
+  kable(
+    col.names = c("Statut", "Nb Chantiers", "Pourcentage (%)"),
+    caption = "Répartition par statut"
+  ) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+---
+
+# Visualisations
+
+## Chantiers par arrondissement
+
+```{r}
+#| label: fig-arrondissement
+#| fig-cap: "Nombre de chantiers par arrondissement parisien"
+
+ggplot(stats_arr, aes(x = reorder(factor(arrondissement), nb_chantiers), y = nb_chantiers)) +
+  geom_col(fill = "steelblue", alpha = 0.8) +
+  geom_text(aes(label = nb_chantiers), hjust = -0.2, size = 3) +
+  coord_flip() +
+  labs(
+    title = "Nombre de chantiers par arrondissement",
+    subtitle = "Source: OpenData Paris",
+    x = "Arrondissement",
+    y = "Nombre de chantiers"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold", size = 14)) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15)))
+```
+
+## Répartition par nature
+
+```{r}
+#| label: fig-nature
+#| fig-cap: "Répartition des chantiers par nature"
+
+ggplot(stats_nature, aes(x = reorder(nature, nb_chantiers), y = nb_chantiers, fill = nature)) +
+  geom_col(alpha = 0.8, show.legend = FALSE) +
+  geom_text(aes(label = nb_chantiers), hjust = -0.1, size = 3) +
+  coord_flip() +
+  labs(
+    title = "Répartition par nature de chantier",
+    x = "Nature",
+    y = "Nombre de chantiers"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold", size = 14)) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  scale_fill_brewer(palette = "Set2")
+```
+
+## Distribution de la durée
+
+```{r}
+#| label: fig-duree
+#| fig-cap: "Distribution de la durée des chantiers (< 1 an)"
+
+mediane_duree <- median(chantiers$duree_jours[chantiers$duree_jours > 0], na.rm = TRUE)
+
+chantiers %>%
+  filter(!is.na(duree_jours) & duree_jours > 0 & duree_jours < 365) %>%
+  ggplot(aes(x = duree_jours)) +
+  geom_histogram(bins = 40, fill = "darkgreen", color = "white", alpha = 0.8) +
+  geom_vline(xintercept = mediane_duree, color = "darkred", linetype = "dashed", linewidth = 1) +
+  annotate("text", x = mediane_duree + 20, y = Inf, label = paste("Médiane:", round(mediane_duree), "jours"),
+           vjust = 2, color = "darkred", fontface = "bold") +
+  labs(
+    title = "Distribution de la durée des chantiers",
+    x = "Durée (jours)",
+    y = "Nombre de chantiers"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold", size = 14))
+```
+
+## Évolution temporelle
+
+```{r}
+#| label: fig-evolution
+#| fig-cap: "Évolution mensuelle du nombre de chantiers débutés"
+
+evolution <- chantiers %>%
+  filter(!is.na(date_debut)) %>%
+  mutate(mois = floor_date(date_debut, "month")) %>%
+  count(mois, name = "nb_chantiers")
+
+ggplot(evolution, aes(x = mois, y = nb_chantiers)) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_point(color = "steelblue", size = 2) +
+  geom_smooth(method = "loess", se = TRUE, alpha = 0.2, color = "darkred") +
+  labs(
+    title = "Évolution mensuelle des chantiers",
+    x = "Date",
+    y = "Nombre de chantiers"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 14),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
+  scale_x_date(date_labels = "%b %Y", date_breaks = "3 months")
+```
+
+## Camembert par statut
+
+```{r}
+#| label: fig-statut
+#| fig-cap: "Répartition des chantiers par statut"
+
+ggplot(stats_statut, aes(x = "", y = nb_chantiers, fill = statut)) +
+  geom_col(width = 1, color = "white") +
+  coord_polar("y", start = 0) +
+  geom_text(aes(label = paste0(pourcentage, "%")), 
+            position = position_stack(vjust = 0.5), size = 4) +
+  labs(title = "Répartition par statut", fill = "Statut") +
+  theme_void() +
+  theme(plot.title = element_text(face = "bold", size = 14, hjust = 0.5)) +
+  scale_fill_manual(values = c("En cours" = "orange", "Terminé" = "green", "À venir" = "steelblue"))
+```
+
+---
+
+# Carte Interactive
+
+```{r}
+#| label: carte-interactive
+#| fig-cap: "Localisation des chantiers à Paris"
+
+# Préparation des données
+chantiers_carte <- chantiers %>%
+  filter(!is.na(latitude) & !is.na(longitude))
+
+# Échantillonnage si nécessaire
+if(nrow(chantiers_carte) > 500) {
+  set.seed(123)
+  chantiers_carte <- chantiers_carte %>% sample_n(500)
+}
+
+# Création de la carte
+if(nrow(chantiers_carte) > 0) {
+  # Palette de couleurs pour le statut
+  statuts_presents <- unique(na.omit(chantiers_carte$statut))
+  couleurs <- c("Terminé" = "green", "En cours" = "orange", "À venir" = "blue")
+  pal <- colorFactor(couleurs[statuts_presents], statuts_presents)
+  
+  # Créer le popup de manière sécurisée
+  chantiers_carte$popup_text <- paste0(
+    "<strong>Référence:</strong> ", chantiers_carte$reference, "<br>",
+    "<strong>Arrondissement:</strong> ", chantiers_carte$arrondissement, "ème<br>",
+    "<strong>Surface:</strong> ", round(chantiers_carte$surface, 2), " m²<br>",
+    "<strong>Statut:</strong> ", chantiers_carte$statut
+  )
+  
+  leaflet(chantiers_carte) %>%
+    addTiles() %>%
+    setView(lng = 2.3522, lat = 48.8566, zoom = 12) %>%
+    addCircleMarkers(
+      lng = ~longitude,
+      lat = ~latitude,
+      radius = 5,
+      color = ~pal(statut),
+      fillOpacity = 0.6,
+      popup = ~popup_text
+    ) %>%
+    addLegend(
+      position = "bottomright",
+      pal = pal,
+      values = ~statut,
+      title = "Statut"
+    )
+} else {
+  cat("Aucune donnée avec coordonnées GPS disponible pour la carte.")
+}
+```
+
+---
+
+# Analyses Avancées
+
+## Corrélation Surface vs Durée
+
+```{r}
+#| label: correlation
+
+donnees_corr <- chantiers %>%
+  filter(surface > 0 & duree_jours > 0)
+
+if(nrow(donnees_corr) > 10) {
+  test_corr <- cor.test(donnees_corr$surface, donnees_corr$duree_jours)
+  
+  cat("Coefficient de corrélation:", round(test_corr$estimate, 4), "\n")
+  cat("P-value:", format(test_corr$p.value, scientific = TRUE), "\n")
+  
+  if(test_corr$p.value < 0.05) {
+    cat("=> Corrélation statistiquement significative")
+  } else {
+    cat("=> Corrélation non significative")
+  }
+}
+```
+
+```{r}
+#| label: fig-correlation
+#| fig-cap: "Relation entre surface et durée des chantiers"
+
+if(nrow(donnees_corr) > 10) {
+  donnees_corr %>%
+    filter(surface < quantile(surface, 0.95) & duree_jours < quantile(duree_jours, 0.95)) %>%
+    ggplot(aes(x = surface, y = duree_jours)) +
+    geom_point(alpha = 0.3, color = "steelblue") +
+    geom_smooth(method = "lm", color = "red", se = TRUE) +
+    labs(
+      title = "Relation Surface vs Durée",
+      subtitle = paste("Corrélation:", round(test_corr$estimate, 3)),
+      x = "Surface (m²)",
+      y = "Durée (jours)"
+    ) +
+    theme_minimal() +
+    theme(plot.title = element_text(face = "bold", size = 14))
+}
+```
+
+## Top 10 des plus gros chantiers
+
+```{r}
+#| label: top10-surface
+
+chantiers %>%
+  arrange(desc(surface)) %>%
+  select(reference, arrondissement, nature, surface, duree_jours) %>%
+  head(10) %>%
+  kable(
+    col.names = c("Référence", "Arr.", "Nature", "Surface (m²)", "Durée (j)"),
+    caption = "Top 10 des plus gros chantiers par surface"
+  ) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+---
+
+# Conclusion
+
+## Principaux résultats
+
+```{r}
+#| label: resume-final
+
+top3_arr <- head(stats_arr, 3)
+top3_nat <- head(stats_nature, 3)
+
+cat("📊 RÉSUMÉ DE L'ANALYSE\n")
+cat("======================\n\n")
+
+cat("📍 Nombre total de chantiers:", nrow(chantiers), "\n")
+cat("📅 Période:", as.character(min(chantiers$date_debut, na.rm = TRUE)), 
+    "à", as.character(max(chantiers$date_fin, na.rm = TRUE)), "\n")
+cat("📐 Surface totale:", format(sum(chantiers$surface, na.rm = TRUE), big.mark = " "), "m²\n\n")
+
+cat("🏆 TOP 3 ARRONDISSEMENTS:\n")
+for(i in 1:3) {
+  cat("   ", i, ". ", top3_arr$arrondissement[i], "ème arr. - ", top3_arr$nb_chantiers[i], " chantiers\n", sep = "")
+}
+
+cat("\n🏗️ TYPES DE CHANTIERS LES PLUS FRÉQUENTS:\n")
+for(i in 1:min(3, nrow(top3_nat))) {
+  cat("   ", i, ". ", top3_nat$nature[i], " (", top3_nat$pourcentage[i], "%)\n", sep = "")
+}
+
+cat("\n⏱️ Durée moyenne:", round(mean(chantiers$duree_jours, na.rm = TRUE), 1), "jours\n")
+```
+
+## Limites de l'étude
+
+- Les données sont mises à jour régulièrement, les résultats peuvent varier
+- Certaines coordonnées GPS peuvent être manquantes
+- L'analyse ne prend pas en compte les facteurs saisonniers
+
+## Perspectives
+
+- Analyse prédictive de la durée des chantiers
+- Étude de l'impact sur la circulation
+- Comparaison avec d'autres grandes villes
+
+---
+
+# Références
+
+- OpenData Paris : <https://opendata.paris.fr/>
+- Documentation Quarto : <https://quarto.org/>
+- Package tidyverse : <https://www.tidyverse.org/>

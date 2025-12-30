@@ -1,0 +1,43 @@
+# ==============================================================================
+# Configuration Quarto pour le projet d'analyse des chantiers de Paris
+# ==============================================================================
+
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Analyse des Chantiers à Paris"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Accueil
+      - href: rapport_chantiers.qmd
+        text: Rapport d'Analyse
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-title: "Table des matières"
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-summary: "Voir le code"
+    code-tools: true
+    highlight-style: github
+    lang: fr
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+
+# Packages R à charger automatiquement
+knitr:
+  opts_chunk:
+    fig.width: 10
+    fig.height: 6
+    fig.align: center
+    out.width: "100%"

@@ -1,0 +1,42 @@
+---
+title: "Accueil - Projet d'Analyse des Chantiers de Paris"
+author: "[Votre Nom]"
+date: today
+format:
+  html:
+    theme: cosmo
+---
+
+# Bienvenue
+
+Ce projet analyse les données des **chantiers de la Ville de Paris** disponibles sur [OpenData Paris](https://opendata.paris.fr/explore/dataset/chantiers-a-paris/).
+
+## Objectifs du projet
+
+1. **Collecter les données** depuis l'API OpenData Paris
+2. **Nettoyer et préparer** les données pour l'analyse
+3. **Analyser statistiquement** la répartition des chantiers
+4. **Visualiser** les résultats avec des graphiques
+5. **Cartographier** les chantiers sur une carte interactive
+
+## Navigation
+
+- [📊 Rapport d'Analyse Complet](rapport_chantiers.qmd) : L'analyse détaillée des données
+
+## Source des données
+
+Les données proviennent de l'API OpenData Paris :
+
+- **Dataset** : `chantiers-a-paris`
+- **URL** : <https://opendata.paris.fr/explore/dataset/chantiers-a-paris/>
+- **Format** : JSON via API REST
+
+## Technologies utilisées
+
+| Technologie | Utilisation |
+|-------------|-------------|
+| **R** | Langage de programmation pour l'analyse |
+| **tidyverse** | Manipulation des données |
+| **ggplot2** | Création de graphiques |
+| **leaflet** | Cartes interactives |
+| **Quarto** | Génération du rapport |
