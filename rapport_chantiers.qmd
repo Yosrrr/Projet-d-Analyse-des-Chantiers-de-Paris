@@ -1,8 +1,6 @@
 ---
 title: "Analyse des Chantiers à Paris"
 subtitle: "Projet de Data Science avec R"
-author: "[Votre Nom]"
-date: today
 format:
   html:
     theme: cosmo
