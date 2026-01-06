@@ -42,8 +42,7 @@ if(length(packages_a_installer) > 0) {
 }
 
 # 1.2 - Chargement des packages
-# Maintenant on charge les packages pour pouvoir les utiliser
-# La fonction library() permet de charger un package
+
 
 library(tidyverse)    # Manipulation de données + graphiques
 library(lubridate)    # Gestion des dates
@@ -66,8 +65,8 @@ print("Tous les packages sont chargés !")
 
 print("TÉLÉCHARGEMENT DES DONNÉES DEPUIS PARIS OPENDATA")
   # 2.1 - Configuration de l'URL de l'API
-# Voici l'adresse de l'API pour les données des chantiers
-api_base_url <- "https://opendata.paris.fr/api/explore/v2.1/catalog/datasets/chantiers-a-paris/records"
+
+api_base_url <- "https://opendata.paris.fr/api/explore/v2.1/printalog/datasets/chantiers-a-paris/records"
 
 # Fonction pour télécharger toutes les données (avec pagination)
 telecharger_donnees <- function(limit_par_page = 100) {
@@ -76,7 +75,7 @@ telecharger_donnees <- function(limit_par_page = 100) {
   offset <- 0
   total_count <- NULL
   
-  cat("Connexion à l'API OpenData Paris...\n")
+  print("Connexion à l'API OpenData Paris...\n")
   
   repeat {
     # Construction de l'URL avec paramètres
@@ -85,19 +84,19 @@ telecharger_donnees <- function(limit_par_page = 100) {
       "?limit=", limit_par_page,
       "&offset=", offset
     )
-    cat("Téléchargement des enregistrements", offset + 1, "à", offset + limit_par_page, "...\n")
+    print("Téléchargement des enregistrements", offset + 1, "à", offset + limit_par_page, "...\n")
     
     # Requête GET
-    response <- tryCatch({
+    response <- tryprintch({
       GET(url, timeout(60))
     }, error = function(e) {
-      cat("Erreur de connexion:", e$message, "\n")
+      print("Erreur de connexion:", e$message, "\n")
       return(NULL)
     })
     
-    # Vérification de la réponse
+    # Vérifiprintion de la réponse
     if(is.null(response) || status_code(response) != 200) {
-      cat("Erreur HTTP:", status_code(response), "\n")
+      print("Erreur HTTP:", status_code(response), "\n")
       break
     }
     
@@ -108,7 +107,7 @@ telecharger_donnees <- function(limit_par_page = 100) {
     # Récupération du nombre total si pas encore fait
     if(is.null(total_count)) {
       total_count <- donnees_json$total_count
-      cat("Nombre total d'enregistrements disponibles:", total_count, "\n\n")
+      print("Nombre total d'enregistrements disponibles:", total_count, "\n\n")
     }
     
     # Extraction des résultats
@@ -118,7 +117,7 @@ telecharger_donnees <- function(limit_par_page = 100) {
     
     tous_les_enregistrements[[length(tous_les_enregistrements) + 1]] <- donnees_json$results
     
-    # Vérification si on a tout récupéré
+    # Vérifiprintion si on a tout récupéré
     offset <- offset + limit_par_page
     if(offset >= total_count) {
       break
@@ -128,10 +127,10 @@ telecharger_donnees <- function(limit_par_page = 100) {
   # Combinaison de tous les enregistrements
   if(length(tous_les_enregistrements) > 0) {
     df_final <- bind_rows(tous_les_enregistrements)
-    cat("\n✓ Téléchargement terminé:", nrow(df_final), "enregistrements récupérés\n\n")
+    print("\n✓ Téléchargement terminé:", nrow(df_final), "enregistrements récupérés\n\n")
     return(df_final)
   } else {
-    cat("Aucune donnée récupérée!\n")
+    print("Aucune donnée récupérée!\n")
     return(NULL)
   }
 }
@@ -139,7 +138,7 @@ telecharger_donnees <- function(limit_par_page = 100) {
 # Téléchargement des données
 chantiers_raw <- telecharger_donnees(limit_par_page = 100)
 
-# Vérification que les données ont été téléchargées
+# Vérifiprintion que les données ont été téléchargées
 if(is.null(chantiers_raw) || nrow(chantiers_raw) == 0) {
   stop("Impossible de télécharger les données. Vérifiez votre connexion internet.")
 }
@@ -168,12 +167,8 @@ print(colnames(donnees_brutes))
 # Aperçu de la structure des données
 print("Structure des données :")
 glimpse(donnees_brutes)
-#PARTIE 3 : NETTOYAGE DES DONNÉES
 
-# Les données brutes ont souvent besoin d'être "nettoyées" :
-# - Renommer les colonnes pour qu'elles soient plus claires
-# - Convertir les types de données (texte en date, texte en nombre, etc.)
-# - Gérer les valeurs manquantes
+#PARTIE 3 : NETTOYAGE DES DONNÉES
 
 print("NETTOYAGE DES DONNÉES")
 
@@ -191,16 +186,13 @@ print(colnames(chantiers))
 
   # 3.2 - Renommage des colonnes pour plus de clarté
   
-# On va renommer certaines colonnes pour qu'elles soient plus compréhensibles
-# La fonction rename_with permet de renommer plusieurs colonnes d'un coup
-
 chantiers <- chantiers %>%
   rename_with(~ case_when(
     . == "chantier_reference" ~ "reference",
     . == "cp_arrondissement" ~ "code_postal",
     . == "chantier_date_debut" ~ "date_debut",
     . == "chantier_date_fin" ~ "date_fin",
-    . == "chantier_categorie" ~ "responsable",
+    . == "chantier_printegorie" ~ "responsable",
     . == "moa_principal" ~ "maitre_ouvrage",
     . == "chantier_localisation_surface" ~ "surface",
     . == "chantier_synthese" ~ "nature",
@@ -214,7 +206,7 @@ print(colnames(chantiers))
 
 
   # 3.3 - Transformation des données  
-# On va maintenant transformer les données pour les rendre exploitables
+
 
 chantiers <- chantiers %>%
   mutate(
@@ -262,8 +254,6 @@ chantiers <- chantiers %>%
 
   # 3.4 - Extraction des coordonnées géographiques
   
-# Les coordonnées GPS servent à placer les chantiers sur une carte
-# L'API peut les fournir sous différents formats
 
 # On vérifie si les colonnes de coordonnées existent
 if("geo_point_2d_lat" %in% colnames(chantiers) & "geo_point_2d_lon" %in% colnames(chantiers)) {
@@ -296,28 +286,17 @@ print(paste("Nombre total de chantiers:", nrow(chantiers)))
 print(paste("Période couverte:", min(chantiers$date_debut, na.rm = TRUE), 
             "à", max(chantiers$date_fin, na.rm = TRUE)))
 
-# Aperçu de la structure finale
+
 print("Structure finale des données :")
 glimpse(chantiers)
 
 #PARTIE 4 : ANALYSES STATISTIQUES DESCRIPTIVES
- 
-# L'analyse descriptive permet de comprendre les données avec des chiffres :
-# - Compter combien de chantiers par catégorie
-# - Calculer des moyennes, médianes, etc.
-# - Identifier les tendances
 
- 
 print("ANALYSES STATISTIQUES DESCRIPTIVES")
  
-
-  # 4.1 - Répartition des chantiers par arrondissement
+# 4.1 - Répartition des chantiers par arrondissement
 
 print("4.1 - RÉPARTITION PAR ARRONDISSEMENT")
-
-# On compte le nombre de chantiers par arrondissement
-# count() compte les occurrences de chaque valeur
-# arrange() trie les résultats (desc = ordre décroissant)
 
 stats_arrondissement <- chantiers %>%
   filter(!is.na(arrondissement)) %>%        # On enlève les valeurs manquantes
@@ -345,7 +324,7 @@ stats_nature <- chantiers %>%
 
 print(stats_nature)
 
-  # 4.3 - Répartition par responsable (catégorie de chantier)
+  # 4.3 - Répartition par responsable (printégorie de chantier)
 
 print("4.3 - RÉPARTITION PAR RESPONSABLE")
 
@@ -357,26 +336,20 @@ stats_responsable <- chantiers %>%
 
 print(stats_responsable)
 
-  # 4.4 - Statistiques sur la surface des chantiers
-  
-
+# 4.4 - Statistiques sur la surface des chantiers
 print("4.4 - STATISTIQUES SUR LA SURFACE (m²)")
 
-
-# On calcule plusieurs indicateurs statistiques
-# summarise() permet de calculer des résumés
-
 stats_surface <- chantiers %>%
-  filter(surface > 0) %>%    # On garde seulement les surfaces positives
+  filter(surface > 0) %>%   
   summarise(
-    minimum = min(surface, na.rm = TRUE),           # Plus petite valeur
-    premier_quartile = quantile(surface, 0.25, na.rm = TRUE),  # 25% des valeurs sont en dessous
-    mediane = median(surface, na.rm = TRUE),        # Valeur du milieu
-    moyenne = mean(surface, na.rm = TRUE),          # Moyenne arithmétique
-    troisieme_quartile = quantile(surface, 0.75, na.rm = TRUE), # 75% des valeurs sont en dessous
-    maximum = max(surface, na.rm = TRUE),           # Plus grande valeur
-    ecart_type = sd(surface, na.rm = TRUE),         # Mesure de dispersion
-    surface_totale = sum(surface, na.rm = TRUE)     # Somme de toutes les surfaces
+    minimum = min(surface, na.rm = TRUE),           
+    premier_quartile = quantile(surface, 0.25, na.rm = TRUE),  
+    mediane = median(surface, na.rm = TRUE),        
+    moyenne = mean(surface, na.rm = TRUE),          
+    troisieme_quartile = quantile(surface, 0.75, na.rm = TRUE), 
+    maximum = max(surface, na.rm = TRUE),         
+    ecart_type = sd(surface, na.rm = TRUE),        
+    surface_totale = sum(surface, na.rm = TRUE)    
   )
 
 print(stats_surface)
@@ -425,29 +398,19 @@ print(stats_encombrement)
 
 
  
-#                   PARTIE 5 : CRÉATION DES GRAPHIQUES
- 
-
-# Les graphiques permettent de visualiser les données de façon claire
-# On utilise ggplot2 (inclus dans tidyverse) qui est très puissant
-# 
-# Structure d'un graphique ggplot :
-# 1. ggplot(données, aes(x=..., y=...)) : définit les données et les axes
-# 2. geom_xxx() : définit le type de graphique (barres, points, lignes...)
-# 3. labs() : ajoute les titres et légendes
-# 4. theme_xxx() : définit le style visuel
-
+#PARTIE 5 : CRÉATION DES GRAPHIQUES
  
 print("CRÉATION DES GRAPHIQUES")
+
   # 5.1 - Graphique en barres : Chantiers par arrondissement
   
 print("Création du graphique 1 : Chantiers par arrondissement...")
 
 graphique1 <- ggplot(
-  data = stats_arrondissement,  # Données à utiliser
+  data = stats_arrondissement, 
   aes(
-    x = reorder(factor(arrondissement), nb_chantiers),  # Axe X = arrondissement (trié)
-    y = nb_chantiers                                     # Axe Y = nombre de chantiers
+    x = reorder(factor(arrondissement), nb_chantiers), 
+    y = nb_chantiers                                     
   )
 ) +
   # geom_col() crée un graphique en barres
@@ -472,11 +435,8 @@ graphique1 <- ggplot(
   # scale_y_continuous ajuste l'échelle de l'axe Y
   scale_y_continuous(expand = expansion(mult = c(0, 0.15)))
 
-# On affiche le graphique
 print(graphique1)
 
-# On sauvegarde le graphique en PNG
-# ggsave() permet de sauvegarder un graphique ggplot
 ggsave("graphique_arrondissements.png", graphique1, width = 10, height = 8, dpi = 300)
 print("Graphique sauvegardé : graphique_arrondissements.png")
 
@@ -511,12 +471,10 @@ print("Graphique sauvegardé : graphique_nature_chantiers.png")
 
 print("Création du graphique 3 : Distribution de la surface...")
 
-# On calcule la médiane pour l'afficher sur le graphique
 mediane_surface <- median(chantiers$surface[chantiers$surface > 0], na.rm = TRUE)
 
 graphique3 <- chantiers %>%
-  # On filtre pour enlever les valeurs extrêmes (outliers)
-  # quantile(surface, 0.95) = valeur en dessous de laquelle se trouvent 95% des données
+
   filter(surface > 0 & surface < quantile(surface, 0.95, na.rm = TRUE)) %>%
   ggplot(aes(x = surface)) +
   # geom_histogram() crée un histogramme
@@ -563,7 +521,7 @@ print("Graphique sauvegardé : graphique_distribution_duree.png")
   # 5.5 - Graphique linéaire : Évolution temporelle
 print("Création du graphique 5 : Évolution temporelle...")
 
-# On prépare les données : nombre de chantiers par mois
+
 evolution_par_mois <- chantiers %>%
   filter(!is.na(date_debut)) %>%
   mutate(
@@ -634,11 +592,6 @@ print("Graphique sauvegardé : graphique_surface_par_arrondissement.png")
   # 5.7 - Boxplot : Durée par nature de chantier
 print("Création du graphique 7 : Durée par nature (boxplot)...")
 
-# Un boxplot montre la distribution d'une variable :
-# - La ligne au milieu = médiane
-# - La boîte = 50% des valeurs (entre Q1 et Q3)
-# - Les moustaches = valeurs min et max (hors outliers)
-# - Les points = outliers (valeurs extrêmes)
 
 graphique7 <- chantiers %>%
   filter(!is.na(duree_jours) & duree_jours > 0 & duree_jours < 500 & !is.na(nature)) %>%
@@ -661,9 +614,6 @@ print("Graphique sauvegardé : graphique_duree_par_nature.png")
   # 5.8 - Camembert : Répartition par statut
 print("Création du graphique 8 : Répartition par statut (camembert)...")
 
-# Un camembert (pie chart) montre les proportions
-# En ggplot2, on crée d'abord un graphique en barres empilées
-# puis on le transforme en cercle avec coord_polar()
 
 graphique8 <- stats_statut %>%
   ggplot(aes(x = "", y = nb_chantiers, fill = statut)) +
@@ -691,8 +641,6 @@ ggsave("graphique_statut_chantiers.png", graphique8, width = 8, height = 8, dpi 
 print("Graphique sauvegardé : graphique_statut_chantiers.png")
 
 #PARTIE 6 : CARTE INTERACTIVE
-# La carte interactive permet de visualiser la localisation des chantiers
-# On utilise le package leaflet qui crée des cartes web
 
  
 print("CRÉATION DE LA CARTE INTERACTIVE")
@@ -704,9 +652,7 @@ print(paste("Nombre de chantiers avec coordonnées:", nrow(chantiers_avec_coords
 
 # On crée la carte seulement si on a des coordonnées
 if(nrow(chantiers_avec_coords) > 0) {
-  
-  # Si il y a trop de points, on prend un échantillon aléatoire
-  # pour éviter de ralentir la carte
+
   if(nrow(chantiers_avec_coords) > 1000) {
     set.seed(123)  # Pour avoir toujours le même échantillon
     chantiers_carte <- chantiers_avec_coords %>% sample_n(1000)
@@ -715,8 +661,7 @@ if(nrow(chantiers_avec_coords) > 0) {
     chantiers_carte <- chantiers_avec_coords
   }
   
-  # On crée une palette de couleurs selon le statut
-  # colorFactor() associe des couleurs aux valeurs
+ 
   palette_couleurs <- colorFactor(
     palette = c("green", "orange", "blue"),
     domain = c("Terminé", "En cours", "À venir")
@@ -730,11 +675,11 @@ if(nrow(chantiers_avec_coords) > 0) {
     setView(lng = 2.3522, lat = 48.8566, zoom = 12) %>%
     # addCircleMarkers() ajoute les points
     addCircleMarkers(
-      lng = ~longitude,           # Colonne de la longitude
-      lat = ~latitude,            # Colonne de la latitude
-      radius = ~pmin(sqrt(surface) / 3, 15),  # Taille selon la surface
-      color = ~palette_couleurs(statut),       # Couleur selon le statut
-      fillOpacity = 0.6,          # Transparence
+      lng = ~longitude,           
+      lat = ~latitude,          
+      radius = ~pmin(sqrt(surface) / 3, 15),  
+      color = ~palette_couleurs(statut),     
+      fillOpacity = 0.6,        
       stroke = TRUE,
       weight = 1,
       # popup = texte qui s'affiche au clic
@@ -766,26 +711,18 @@ if(nrow(chantiers_avec_coords) > 0) {
 }
 
 #PARTIE 7 : ANALYSES AVANCÉES
- 
-
- 
 print("ANALYSES AVANCÉES")
- 
-
-  # 7.1 - Tableau croisé : Arrondissement x Nature
+ # 7.1 - Tableau croisé : Arrondissement x Nature
 
 print("7.1 - TABLEAU CROISÉ ARRONDISSEMENT x NATURE")
-
-# Un tableau croisé montre la relation entre deux variables catégorielles
-# pivot_wider transforme un tableau long en tableau large
 
 tableau_croise <- chantiers %>%
   filter(!is.na(arrondissement) & !is.na(nature)) %>%
   count(arrondissement, nature) %>%
   pivot_wider(
-    names_from = nature,    # Les natures deviennent des colonnes
-    values_from = n,        # Les valeurs sont les comptages
-    values_fill = 0         # On met 0 là où il n'y a pas de données
+    names_from = nature,    
+    values_from = n,        
+    values_fill = 0         
   )
 
 print(head(tableau_croise, 10))
@@ -794,16 +731,13 @@ print(head(tableau_croise, 10))
 
 print("7.2 - CORRÉLATION ENTRE SURFACE ET DURÉE")
 
-# La corrélation mesure la relation entre deux variables numériques
-# - Corrélation proche de 1 : relation positive forte
-# - Corrélation proche de -1 : relation négative forte
-# - Corrélation proche de 0 : pas de relation
+
 
 donnees_corr <- chantiers %>%
   filter(surface > 0 & duree_jours > 0)
 
 if(nrow(donnees_corr) > 10) {
-  # cor.test() calcule le coefficient de corrélation et teste sa significativité
+ 
   test_correlation <- cor.test(
     donnees_corr$surface, 
     donnees_corr$duree_jours, 
@@ -815,9 +749,9 @@ if(nrow(donnees_corr) > 10) {
   
   # Interprétation
   if(test_correlation$p.value < 0.05) {
-    print("=> La corrélation est statistiquement significative (p < 0.05)")
+    print("=> La corrélation est statistiquement signifiprintive (p < 0.05)")
   } else {
-    print("=> La corrélation n'est pas statistiquement significative (p >= 0.05)")
+    print("=> La corrélation n'est pas statistiquement signifiprintive (p >= 0.05)")
   }
   
   # Graphique de corrélation (nuage de points)
@@ -878,10 +812,6 @@ print(top10_duree)
 #PARTIE 8 : EXPORT DES RÉSULTATS
 print("EXPORT DES RÉSULTATS")
  
-
-# On exporte les données nettoyées et les statistiques en fichiers CSV
-# CSV = Comma Separated Values = format lisible par Excel
-
 # Export des données nettoyées
 write_csv(chantiers, "chantiers_paris_nettoye.csv")
 print("Fichier exporté : chantiers_paris_nettoye.csv")
@@ -928,9 +858,7 @@ for(i in 1:min(3, nrow(top3_nat))) {
   print(paste("  -", top3_nat$nature[i], ":", top3_nat$nb_chantiers[i], 
               "(", top3_nat$pourcentage[i], "%)"))
 }
-
-print("")
 print(paste("DURÉE MOYENNE :", round(mean(chantiers$duree_jours, na.rm = TRUE), 1), "jours"))
 print(paste("SURFACE MOYENNE :", round(mean(chantiers$surface[chantiers$surface > 0], na.rm = TRUE), 2), "m²"))
-print("  FIN DE L'ANALYSE")
+
  
