@@ -12,7 +12,9 @@ Ce projet analyse les données des chantiers en cours, terminés et à venir sur
 - **Nettoyer** et préparer les données pour l'analyse
 - **Analyser** statistiquement la répartition des chantiers
 - **Visualiser** les résultats via des graphiques et une carte interactive
+- **Générer** un rapport web interactif avec Quarto
 
+Analyser les données des chantiers de la Ville de Paris pour comprendre leur répartition géographique, leur nature et leur évolution temporelle.
 ---
 
 ## 📁 Structure du Projet
@@ -115,9 +117,12 @@ source("analyse_chantiers.R")
 ```bash
 quarto render rapport_chantiers.qmd
 ```
-
+# Publier sur GitHub Pages
+```bash
+quarto publish gh-pages
 ---
-
+https://yosrrr.github.io/Projet-d-Analyse-des-Chantiers-de-Paris/
+```
 ## 📈 Résultats Principaux
 
 | Indicateur | Valeur |
